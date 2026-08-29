@@ -1,0 +1,70 @@
+/* src/layouts/ParticipantLayout/ParticipantLayout.css */
+
+/* 1. Lock the main background to the exact size of the screen */
+.participant-layout-container {
+  display: flex;
+  height: 100vh; /* Locks height to exactly the viewport window */
+  width: 100vw;
+  overflow: hidden; /* Prevents whole page scroll */
+  background: linear-gradient(135deg, #050b14 0%, #0a0f25 100%);
+}
+
+/* 2. UPDATED: Force the sidebar to stay fixed AND handle internal scrolling */
+.sidebar-container {
+  height: calc(100vh - 40px) !important; 
+  position: sticky;
+  top: 20px;
+  /* THE FIX: Allow internal scrolling in the sidebar */
+  overflow-y: auto; 
+}
+
+/* Optional: Custom Premium Scrollbar for the SIDEBAR (very subtle) */
+.sidebar-container::-webkit-scrollbar {
+  width: 5px; /* Thinner scrollbar for navigation */
+}
+
+.sidebar-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.1); /* Extremely faint purple */
+  border-radius: 10px;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.3); /* Brighter purple on hover */
+}
+
+/* 3. Only the right side is allowed to scroll */
+.participant-main-content {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto; /* Scrollbar only appears here */
+  padding: 30px 40px 60px 40px; /* Extra bottom padding */
+}
+
+/* Optional: Custom Premium Scrollbar for MAIN CONTENT */
+.participant-main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.participant-main-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.participant-main-content::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.2);
+  border-radius: 10px;
+}
+
+.participant-main-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.5);
+}
+
+/* Ensure no white edges */
+body {
+  margin: 0;
+  padding: 0;
+  background: #050b14;
+}

@@ -1,0 +1,179 @@
+/* src/views/ParticipantView/Exam.css */
+
+.exam-page-container {
+  max-width: 850px;
+  margin: 0 auto;
+  color: #e2e8f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-bottom: 40px;
+}
+
+/* Header Section */
+.exam-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 35px;
+}
+
+.exam-header-left h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+}
+
+.exam-header-left p {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.exam-header-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.05);
+}
+
+/* --- Pending Test Section --- */
+.pending-section {
+  margin-bottom: 40px;
+}
+
+.pending-card {
+  /* Dark purple gradient fading into the standard background */
+  background: linear-gradient(90deg, rgba(76, 29, 149, 0.2) 0%, rgba(9, 14, 26, 1) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  border-radius: 12px;
+  padding: 25px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.pending-card:hover {
+  border-color: rgba(139, 92, 246, 0.7);
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.1);
+}
+
+.pending-label {
+  color: #c084fc; /* Light purple */
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.pending-title {
+  font-size: 1.4rem;
+  color: #ffffff;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+}
+
+.duration-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+.duration-icon {
+  color: #8b5cf6;
+}
+
+.take-test-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* Dark blue to dark purple gradient */
+  background: linear-gradient(90deg, rgba(30, 58, 138, 0.5), rgba(88, 28, 135, 0.5));
+  border: 1px solid rgba(139, 92, 246, 0.5);
+  color: #ffffff;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.take-test-btn:hover {
+  background: linear-gradient(90deg, rgba(30, 58, 138, 0.8), rgba(88, 28, 135, 0.8));
+  border-color: #a855f7;
+  transform: translateY(-2px);
+}
+
+/* --- Completed Tests Section --- */
+.section-subtitle {
+  color: #4ade80; /* Bright green */
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.completed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.completed-card {
+  background: #090e1a;
+  border: 1px solid rgba(16, 185, 129, 0.15); /* Faint green border */
+  border-radius: 12px;
+  padding: 22px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.completed-card:hover {
+  background: rgba(16, 185, 129, 0.03);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.completed-info h3 {
+  margin: 0 0 10px 0;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.completed-metrics {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.score-text {
+  color: #cbd5e1;
+  font-size: 1rem;
+}
+
+.score-text span {
+  color: #4ade80; /* Bright green percentage */
+  font-weight: 700;
+}
+
+.completed-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  color: #10b981;
+  padding: 8px 18px;
+  border-radius: 20px; /* Pill shape */
+  background: rgba(16, 185, 129, 0.05);
+  font-size: 0.95rem;
+  font-weight: 500;
+}

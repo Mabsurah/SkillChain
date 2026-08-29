@@ -1,0 +1,185 @@
+/* src/views/ParticipantView/MyCourses.css */
+
+.my-courses-container {
+  max-width: 850px;
+  margin: 0 auto;
+  color: #e2e8f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-bottom: 40px;
+}
+
+/* Header Section (Clean, no upper right button) */
+.mc-header-section {
+  margin-bottom: 30px;
+}
+
+.mc-header-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+}
+
+.mc-header-section p {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+/* Search Bar */
+.mc-search-wrapper {
+  position: relative;
+  margin-bottom: 35px;
+}
+
+.mc-search-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+}
+
+.mc-search-input {
+  width: 100%;
+  background: #090e1a;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+  padding: 16px 20px 16px 50px;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.mc-search-input:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+}
+
+.mc-search-input::placeholder {
+  color: #64748b;
+}
+
+/* Courses List */
+.mc-courses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mc-course-card {
+  background: #090e1a;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 14px;
+  padding: 25px 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.mc-course-card:hover {
+  border-color: rgba(139, 92, 246, 0.5);
+  background: linear-gradient(90deg, rgba(76, 29, 149, 0.06) 0%, rgba(9, 14, 26, 1) 100%);
+  transform: translateY(-2px);
+}
+
+/* Card Top Row */
+.mc-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mc-course-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* UPDATED: Reduced gap slightly for a tighter cluster of badges */
+.mc-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+}
+
+/* Enrolled Pill Badge with Glowing Green Dot */
+.mc-enrolled-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #4ade80;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.mc-green-dot {
+  width: 7px;
+  height: 7px;
+  background-color: #4ade80;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #4ade80;
+}
+
+/* UPDATED: Converted into a pill badge matching the Enrolled badge */
+.mc-level-text {
+  display: flex;
+  align-items: center;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #3b82f6; /* Nice distinct blue color */
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Card Bottom Row */
+.mc-card-bottom {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+.mc-info-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mc-dot-separator {
+  color: #475569;
+}
+
+/* Learn Now Button */
+.mc-learn-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(90deg, #1e1b4b 0%, #4c1d95 100%);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  color: #ffffff;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mc-learn-btn:hover {
+  background: linear-gradient(90deg, #312e81 0%, #581c87 100%);
+  border-color: #a855f7;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}

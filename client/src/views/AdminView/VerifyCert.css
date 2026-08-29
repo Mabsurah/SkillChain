@@ -1,0 +1,235 @@
+/* src/views/AdminView/VerifyCert.css */
+
+.vc-container {
+  max-width: 1250px;
+  margin: 0 auto;
+  color: #e2e8f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-bottom: 50px;
+}
+
+/* --- Header & Stats Section --- */
+.vc-top-section {
+  display: flex;
+  flex-direction: column; /* Stacks the text on top and cards on bottom */
+  gap: 25px; /* Adds clean spacing between text and cards */
+  margin-bottom: 40px;
+}
+
+.vc-header-text h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+}
+
+.vc-header-text p {
+  color: #94a3b8;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.vc-stats-wrapper {
+  display: flex;
+  gap: 20px;
+  width: 100%; /* Forces the wrapper to span the whole screen */
+}
+
+.vc-stat-card {
+  background: #090e1a;
+  border: 1px solid rgba(255, 255, 255, 0.06); 
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1; /* THIS IS THE MAGIC TRICK: Forces all 4 cards to stretch and divide the empty space equally! */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.vc-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Stat Card Exact Colors */
+.vc-icon-total { background: rgba(168, 85, 247, 0.1); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.2); }
+.vc-icon-accepted { background: rgba(16, 185, 129, 0.1); color: #4ade80; border: 1px solid rgba(16, 185, 129, 0.2); }
+.vc-icon-rejected { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+.vc-icon-pending { background: rgba(59, 130, 246, 0.1); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.2); }
+
+.vc-stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.vc-stat-info span {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.vc-stat-info h3 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* --- Table Section --- */
+.vc-table-container {
+  background: #090e1a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px 30px;
+}
+
+.vc-table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2.5fr 1.5fr 2.5fr;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.vc-table-row:last-child {
+  border-bottom: none;
+}
+
+.vc-table-header {
+  color: #c084fc; 
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.vc-col {
+  display: flex;
+  align-items: center;
+}
+
+.vc-cert-id {
+  color: #e2e8f0;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.vc-dot {
+  width: 6px;
+  height: 6px;
+  background: #a855f7;
+  border-radius: 50%;
+}
+
+.vc-view-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  color: #60a5fa;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+.vc-view-btn:hover {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+/* Select Dropdown */
+.vc-select {
+  width: 90%;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #94a3b8;
+  padding: 10px 15px;
+  border-radius: 8px;
+  outline: none;
+  font-size: 0.95rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2394a3b8%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  transition: all 0.3s ease;
+}
+.vc-select:focus {
+  border-color: #8b5cf6;
+}
+.vc-select option {
+  background: #090e1a;
+  color: #ffffff;
+}
+
+/* Disabled State for Select Dropdown */
+.vc-select:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Status Badges */
+.vc-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  width: fit-content;
+}
+.vc-badge.pending { background: rgba(234, 179, 8, 0.1); color: #eab308; }
+.vc-badge.accepted { background: rgba(16, 185, 129, 0.1); color: #4ade80; }
+.vc-badge.rejected { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+.vc-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.vc-badge.pending .vc-badge-dot { background: #eab308; }
+.vc-badge.accepted .vc-badge-dot { background: #4ade80; }
+.vc-badge.rejected .vc-badge-dot { background: #ef4444; }
+
+/* Action Buttons */
+.vc-actions-col {
+  display: flex;
+  gap: 10px;
+}
+
+.vc-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.vc-btn-accept { border: 1px solid rgba(16, 185, 129, 0.4); color: #4ade80; }
+.vc-btn-accept:hover { background: rgba(16, 185, 129, 0.1); border-color: #4ade80; }
+
+.vc-btn-reject { border: 1px solid rgba(239, 68, 68, 0.4); color: #ef4444; }
+.vc-btn-reject:hover { background: rgba(239, 68, 68, 0.1); border-color: #ef4444; }
+
+/* Disabled States for Action Buttons */
+.vc-action-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.vc-btn-accept:disabled:hover { background: transparent; border-color: rgba(16, 185, 129, 0.4); }
+.vc-btn-reject:disabled:hover { background: transparent; border-color: rgba(239, 68, 68, 0.4); }

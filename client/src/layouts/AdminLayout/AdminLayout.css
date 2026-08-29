@@ -1,0 +1,31 @@
+/* src/layouts/AdminLayout/AdminLayout.css */
+
+/* Force global dark theme so we never see that white background again */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #050b14;
+  color: #e2e8f0;
+}
+
+.admin-layout-container {
+  display: flex;
+  flex-direction: row; /* Forces sidebar left, content right */
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: linear-gradient(135deg, #050b14 0%, #0a0f25 100%);
+}
+
+.admin-main-content {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+/* Custom Scrollbar for Main Content */
+.admin-main-content::-webkit-scrollbar { width: 8px; }
+.admin-main-content::-webkit-scrollbar-track { background: transparent; }
+.admin-main-content::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.2); border-radius: 10px; }

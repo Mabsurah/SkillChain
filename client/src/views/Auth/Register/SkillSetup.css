@@ -1,0 +1,240 @@
+/* Reset html/body to prevent default browser page scrolling */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: #050f1f;
+}
+
+.role-page-wrapper {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* Deep dark gradient with subtle blue/purple hints */
+  background: linear-gradient(135deg, #050f1f 0%, #150924 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+  padding: 20px;
+  overflow: hidden; /* Completely hides the vertical scrollbar */
+}
+
+.role-header-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.role-header-section .users-icon {
+  margin-bottom: 5px;
+  width: 38px;
+  height: 38px;
+}
+
+.role-header-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.role-header-section h2 {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.accent-dash {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.accent-blue { color: #3b82f6; }
+.accent-pink { color: #ec4899; }
+
+.role-header-section p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* The Cards Layout */
+.cards-container {
+  display: flex;
+  gap: 35px;
+  position: relative;
+  max-width: 850px;
+  width: 100%;
+  justify-content: center;
+}
+
+.role-card {
+  flex: 1;
+  border-radius: 20px;
+  padding: 25px 25px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-sizing: border-box;
+}
+
+/* Specific Card Glows and Borders */
+.teacher-card {
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow: inset 0 0 30px rgba(59, 130, 246, 0.05), 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.newbie-card {
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  box-shadow: inset 0 0 30px rgba(168, 85, 247, 0.05), 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Card Content */
+.illustration-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+  margin-bottom: 15px;
+}
+
+.role-card h3 {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin: 0 0 8px 0;
+  line-height: 1.2;
+}
+
+.role-tag {
+  font-weight: 500;
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+.role-tag.teacher-tag { color: #60a5fa; }
+.role-tag.newbie-tag { color: #c084fc; }
+
+.role-desc {
+  color: #94a3b8;
+  font-size: 0.88rem;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  padding: 0 10px;
+}
+
+/* The "OR" Badge */
+.or-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+/* Buttons */
+.upload-btn {
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 0.9rem;
+}
+
+.upload-btn:hover { background: rgba(255, 255, 255, 0.1); }
+
+.submit-btn {
+  background: rgba(29, 78, 216, 0.3);
+  color: #93c5fd;
+  border: 1px solid rgba(59, 130, 246, 0.6);
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  width: 100%;
+  max-width: 180px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 0.9rem;
+}
+
+.submit-btn:hover { background: rgba(29, 78, 216, 0.5); }
+
+.enroll-btn {
+  background: rgba(126, 34, 206, 0.3);
+  color: #d8b4fe;
+  border: 1px solid rgba(168, 85, 247, 0.6);
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  width: 100%;
+  max-width: 220px;
+  margin-top: auto; 
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 0.9rem;
+}
+
+.enroll-btn:hover { background: rgba(126, 34, 206, 0.5); }
+
+.role-footer {
+  margin-top: 25px;
+  color: #94a3b8;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Disabled state for Submit button */
+.submit-btn:disabled {
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.submit-btn:not(:disabled):hover {
+  background: rgba(29, 78, 216, 0.5);
+}
+
+/* Uploaded state indicator styling */
+.upload-btn.file-uploaded {
+  background: rgba(74, 222, 128, 0.1);
+  border-color: rgba(74, 222, 128, 0.4);
+  color: #4ade80;
+}

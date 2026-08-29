@@ -1,0 +1,206 @@
+.admin-dashboard-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  color: #e2e8f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-bottom: 40px;
+  box-sizing: border-box;
+}
+
+.admin-dash-header {
+  margin-bottom: 25px;
+}
+
+.admin-dash-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+}
+
+.admin-dash-header p {
+  color: #94a3b8;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* 8-Card Grid (4 columns x 2 rows) */
+.admin-dash-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 25px;
+}
+
+/* Stat Card Styling */
+.admin-stat-card {
+  background: #090e1a;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+  padding: 18px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.admin-stat-card:hover {
+  border-color: rgba(139, 92, 246, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Icon Box Themes */
+.admin-stat-icon-box {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-stat-icon-box.blue { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; }
+.admin-stat-icon-box.yellow { background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.3); color: #facc15; }
+.admin-stat-icon-box.green { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #4ade80; }
+.admin-stat-icon-box.purple { background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); color: #c084fc; }
+.admin-stat-icon-box.cyan { background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.3); color: #22d3ee; }
+.admin-stat-icon-box.orange { background: rgba(249, 115, 22, 0.1); border: 1px solid rgba(249, 115, 22, 0.3); color: #fb923c; }
+.admin-stat-icon-box.pink { background: rgba(236, 72, 153, 0.1); border: 1px solid rgba(236, 72, 153, 0.3); color: #f472b6; }
+.admin-stat-icon-box.teal { background: rgba(20, 184, 166, 0.1); border: 1px solid rgba(20, 184, 166, 0.3); color: #2dd4bf; }
+
+/* Info Section */
+.admin-stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-stat-title {
+  color: #94a3b8;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.admin-stat-value {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 2px 0 0 0;
+}
+
+.admin-stat-desc {
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.text-blue { color: #60a5fa; }
+.text-yellow { color: #facc15; }
+.text-green { color: #4ade80; }
+.text-purple { color: #c084fc; }
+.text-cyan { color: #22d3ee; }
+.text-orange { color: #fb923c; }
+.text-pink { color: #f472b6; }
+.text-teal { color: #2dd4bf; }
+
+/* --- Circular Chart Card Section --- */
+.admin-chart-section-card {
+  background: #090e1a;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+  padding: 24px 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.admin-chart-section-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.admin-chart-content-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+/* Circular Progress Conic CSS Chart */
+.admin-circular-chart {
+  width: 135px;
+  height: 135px;
+  min-width: 135px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #4ade80 0deg 180deg,       /* Beginner: 50% = 180deg */
+    #3b82f6 180deg 288deg,    /* Intermediate: 30% = 108deg */
+    #a855f7 288deg 360deg     /* Expert: 20% = 72deg */
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+}
+
+.admin-chart-inner-circle {
+  width: 100px;
+  height: 100px;
+  background: #090e1a;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-chart-center-val {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.admin-chart-center-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+/* Legend Styling */
+.admin-chart-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.admin-legend-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 8px;
+}
+
+.admin-legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.admin-legend-dot.beginner { background: #4ade80; }
+.admin-legend-dot.intermediate { background: #3b82f6; }
+.admin-legend-dot.expert { background: #a855f7; }
+
+.admin-legend-text {
+  color: #e2e8f0;
+  font-size: 0.92rem;
+  flex-grow: 1;
+}
+
+.admin-legend-percentage {
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 0.92rem;
+}

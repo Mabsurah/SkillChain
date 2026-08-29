@@ -1,0 +1,158 @@
+/* src/views/ParticipantView/ReviewContent.css */
+
+.review-content-container {
+  max-width: 1050px;
+  margin: 0 auto;
+  color: #e2e8f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-bottom: 50px;
+}
+
+/* Header */
+.rc-header {
+  margin-bottom: 35px;
+}
+
+.rc-header h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+}
+
+.rc-header p {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+/* Review Card */
+.rc-lesson-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #090e1a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 20px 25px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.rc-lesson-card:hover {
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.rc-card-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Green Number Badge */
+.rc-number-badge {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.05);
+  color: #4ade80;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.rc-lesson-title {
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Card Buttons Container */
+.rc-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Accept Button */
+.rc-accept-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #4ade80;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.rc-accept-btn:hover {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: #34d399;
+}
+
+/* Reject Button */
+.rc-reject-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.rc-reject-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #f87171;
+}
+
+/* Watch Now Button */
+.rc-watch-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(90deg, rgba(30, 27, 75, 0.8) 0%, rgba(76, 29, 149, 0.8) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.5);
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 10px;
+}
+
+.rc-watch-btn:hover {
+  background: linear-gradient(90deg, rgba(49, 46, 129, 0.9) 0%, rgba(91, 33, 182, 0.9) 100%);
+  border-color: #a855f7;
+}
+
+/* Responsiveness */
+@media (max-width: 900px) {
+  .rc-lesson-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .rc-card-actions {
+    width: 100%;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+}

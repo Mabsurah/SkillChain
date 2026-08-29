@@ -1,0 +1,212 @@
+/* src/views/ParticipantView/SkillHub.css */
+
+.skillhub-page-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  color: #e2e8f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+  padding-bottom: 50px;
+}
+
+/* Header Section (Removed the right button) */
+.sh-header-section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+}
+
+.sh-header-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+}
+
+.sh-header-section p {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Search Bar */
+.sh-search-wrapper {
+  position: relative;
+  margin-bottom: 35px;
+}
+
+.sh-search-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+}
+
+.sh-search-input {
+  width: 100%;
+  background: #090e1a;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+  padding: 16px 20px 16px 50px;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box; /* Ensures padding doesn't break the width */
+}
+
+.sh-search-input:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+}
+
+.sh-search-input::placeholder {
+  color: #64748b;
+}
+
+/* Grid Layout for Courses */
+.sh-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+/* Individual Course Card */
+.sh-card {
+  background: #090e1a;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+  padding: 30px 25px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle gradient hover effect */
+.sh-card:hover {
+  border-color: rgba(139, 92, 246, 0.6);
+  background: linear-gradient(180deg, rgba(76, 29, 149, 0.08) 0%, rgba(9, 14, 26, 1) 100%);
+  transform: translateY(-4px);
+}
+
+.sh-course-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 12px 0; /* Adjusted margin to make space for the badge */
+  line-height: 1.4;
+  min-height: 55px; /* min-height ensures cards stay same size even if title spans 2 lines */
+}
+
+/* Level Badge styling */
+.sh-level-badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start; /* Keeps the badge tight around the text */
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #3b82f6; /* Matching blue text */
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 20px; /* Space between the badge and the divider */
+}
+
+/* Faint divider line under the title */
+.sh-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 25px;
+}
+
+.sh-class-count {
+  color: #cbd5e1;
+  font-size: 1rem;
+  margin-bottom: 35px;
+  flex-grow: 1; /* Pushes the buttons to the bottom evenly */
+}
+
+/* Bottom Button Container */
+.sh-card-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+/* Charge Box (Static Green) */
+.sh-charge-box {
+  flex: 1;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #4ade80;
+  border-radius: 8px;
+  padding: 12px 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Watch Now Box (Interactive Purple) */
+.sh-enroll-btn {
+  flex: 1;
+  background: linear-gradient(90deg, rgba(76, 29, 149, 0.6), rgba(49, 46, 129, 0.8));
+  border: 1px solid rgba(139, 92, 246, 0.5);
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 12px 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.sh-enroll-btn:hover {
+  background: linear-gradient(90deg, rgba(76, 29, 149, 0.9), rgba(67, 56, 202, 0.9));
+  border-color: #a855f7;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.25);
+}
+
+/* Responsive Grid for Tablets and Phones */
+@media (max-width: 1024px) {
+  .sh-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .sh-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Details Button Styling */
+.sh-details-btn {
+  background: transparent;
+  border: 1px solid rgba(139, 92, 246, 0.5);
+  color: #a855f7;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sh-details-btn:hover {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: #c084fc;
+  color: #c084fc;
+}

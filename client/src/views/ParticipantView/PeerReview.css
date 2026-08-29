@@ -1,0 +1,143 @@
+/* src/views/ParticipantView/PeerReview.css */
+
+.peer-review-container {
+  max-width: 950px;
+  margin: 0 auto;
+  color: #e2e8f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-bottom: 40px;
+}
+
+/* Header Section */
+.pr-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 35px;
+}
+
+.pr-header-left h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+}
+
+.pr-header-left p {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+/* Review Guidelines Button */
+.guidelines-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(139, 92, 246, 0.05);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: #c084fc; 
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.guidelines-btn:hover {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: #a855f7;
+  color: #d8b4fe;
+}
+
+/* Grid Layout for Cards */
+.pr-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+/* Individual Card Styling */
+.pr-card {
+  background: #090e1a;
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-top: 1px solid rgba(139, 92, 246, 0.5); 
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.pr-card:hover {
+  border-color: rgba(139, 92, 246, 0.6);
+  background: linear-gradient(180deg, rgba(76, 29, 149, 0.1) 0%, rgba(9, 14, 26, 1) 100%);
+  transform: translateY(-2px);
+}
+
+.pr-course-title {
+  font-size: 1.25rem;
+  color: #ffffff;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+}
+
+/* Progress Info Row */
+.pr-progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.pr-progress-label {
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}
+
+.pr-progress-ratio {
+  color: #4ade80; 
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Progress Bar */
+.pr-progress-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  margin-bottom: 25px;
+  overflow: hidden;
+}
+
+.pr-progress-fill {
+  height: 100%;
+  background: #4ade80;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+  transition: width 1s ease-in-out;
+}
+
+/* Review Now Button */
+.review-now-btn {
+  width: 100%;
+  padding: 12px;
+  background: rgba(16, 185, 129, 0.08); 
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #4ade80;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: auto; 
+}
+
+.review-now-btn:hover {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #4ade80;
+  color: #ffffff;
+}
