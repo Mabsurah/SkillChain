@@ -1,0 +1,337 @@
+/* src/views/ParticipantView/Contribution.css */
+
+.contribution-container {
+  max-width: 900px;
+  margin: 0 auto;
+  color: #e2e8f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-bottom: 50px;
+}
+
+/* Header Section */
+.cont-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.cont-header-text h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+}
+
+.cont-header-text p {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+/* Add New Course Button */
+.cont-add-course-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(90deg, rgba(30, 27, 75, 0.8) 0%, rgba(76, 29, 149, 0.6) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.5);
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cont-add-course-btn:hover {
+  background: linear-gradient(90deg, rgba(49, 46, 129, 0.9) 0%, rgba(91, 33, 182, 0.8) 100%);
+  border-color: #a855f7;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+}
+
+/* Sections */
+.cont-section {
+  margin-bottom: 40px;
+}
+
+.cont-section-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 15px;
+}
+
+/* Cards */
+.cont-card {
+  background: #090e1a;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.cont-card:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+}
+
+/* Card Top Row (Title & Count) */
+.cont-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cont-card-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+}
+
+.cont-lesson-count {
+  color: #cbd5e1;
+  font-size: 1rem;
+}
+
+/* Status Badge */
+.cont-status-badge {
+  display: inline-block;
+  background: rgba(16, 185, 129, 0.1);
+  color: #4ade80;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Centered Actions Wrapper */
+.cont-card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px; 
+  margin-top: 25px;
+}
+
+/* Content List Button */
+.cont-add-content-btn {
+  background: linear-gradient(90deg, rgba(30, 27, 75, 0.8) 0%, rgba(76, 29, 149, 0.6) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  color: #ffffff;
+  padding: 10px 30px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cont-add-content-btn:hover {
+  background: linear-gradient(90deg, rgba(49, 46, 129, 0.9) 0%, rgba(91, 33, 182, 0.8) 100%);
+  border-color: #a855f7;
+}
+
+/* Mark Completed Button */
+.cont-mark-completed-btn {
+  background: transparent;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #4ade80;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cont-mark-completed-btn:hover {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: #34d399;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
+}
+
+/* --- Modal Overlay & Container (Used for Add New Course) --- */
+.cont-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.cont-modal {
+  background: #090e1a;
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 600px;
+  padding: 35px;
+  position: relative;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+.cont-modal-close {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.cont-modal-close:hover {
+  color: #ffffff;
+}
+
+/* Modal Typography */
+.cont-modal h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+}
+
+.cont-modal p {
+  color: #94a3b8;
+  font-size: 1rem;
+  margin: 0 0 25px 0;
+}
+
+/* Form Inputs */
+.cont-form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cont-form-group label {
+  color: #e2e8f0;
+  font-size: 1rem;
+}
+
+.cont-required {
+  color: #ef4444; /* The red asterisk */
+}
+
+.cont-form-input,
+.cont-form-select {
+  background: rgba(139, 92, 246, 0.05);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 8px;
+  padding: 14px 16px;
+  color: #ffffff;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cont-form-input:focus,
+.cont-form-select:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+}
+
+.cont-form-input::placeholder {
+  color: #475569;
+}
+
+/* Specific styling for Select Combo Box */
+.cont-form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2394a3b8%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px;
+  cursor: pointer;
+}
+
+.cont-form-select option {
+  background: #090e1a;
+  color: #ffffff;
+  padding: 10px;
+}
+
+.cont-placeholder-option {
+  color: #a855f7 !important; /* Purple placeholder text */
+}
+
+/* Footer Buttons */
+.cont-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 35px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cont-btn-cancel {
+  background: transparent;
+  border: 1px solid #475569;
+  color: #cbd5e1;
+  padding: 10px 30px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cont-btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  border-color: #94a3b8;
+}
+
+.cont-btn-ok {
+  background: linear-gradient(90deg, rgba(30, 27, 75, 0.9) 0%, rgba(76, 29, 149, 0.9) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.6);
+  color: #ffffff;
+  padding: 10px 40px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.cont-btn-ok:hover {
+  background: linear-gradient(90deg, rgba(49, 46, 129, 1) 0%, rgba(91, 33, 182, 1) 100%);
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+/* Container for multiple badges under the title */
+.cont-badges-wrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Level Badge Styling */
+.cont-level-badge {
+  display: inline-block;
+  background: rgba(139, 92, 246, 0.1);
+  color: #c084fc;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}

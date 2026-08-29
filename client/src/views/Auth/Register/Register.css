@@ -1,0 +1,159 @@
+/* Reset html/body to stop default layout scrolling */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: #073a54;
+}
+
+.register-page-container {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Dark teal to deep purple gradient */
+  background: linear-gradient(135deg, #073a54 0%, #461b5c 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 15px 10px;
+  box-sizing: border-box;
+}
+
+.register-glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 24px 35px;
+  width: 100%;
+  max-width: 650px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  color: #e2e8f0;
+  box-sizing: border-box;
+}
+
+.register-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #9cd4f8; 
+  margin-bottom: 15px;
+}
+
+.register-header h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.section-title {
+  font-size: 1rem;
+  color: #aebce6;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 4px;
+  margin-top: 15px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+/* Form Row Alignments */
+.form-row-side-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form-row-side-label label {
+  width: 130px; 
+  font-size: 0.9rem;
+  color: #e2e8f0;
+}
+
+.form-input-container {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon-reg {
+  position: absolute;
+  left: 12px;
+  color: #8b7ca6;
+}
+
+.glass-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: #fff;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.3s;
+  box-sizing: border-box;
+}
+
+.glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.glass-input:focus {
+  border-color: #9cd4f8;
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 2px rgba(156, 212, 248, 0.2);
+}
+
+.glass-input.with-icon {
+  padding-left: 38px;
+}
+
+/* Grids for specific sections */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.grid-col label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.85rem;
+  color: #e2e8f0;
+}
+
+/* Next Button Styling */
+.next-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.btn-next-glass {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 8px 35px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-next-glass:hover {
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}

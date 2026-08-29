@@ -1,0 +1,420 @@
+/* src/views/AdminView/ApproveCourse.css */
+
+.ac-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  color: #e2e8f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-bottom: 50px;
+}
+
+/* --- Header Section --- */
+.ac-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.ac-header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.ac-header-icon {
+  width: 55px;
+  height: 55px;
+  background: rgba(139, 92, 246, 0.05);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #c084fc;
+}
+
+.ac-header-text h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+}
+
+.ac-header-text p {
+  color: #94a3b8;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Add Skill Button */
+.ac-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #7c3aed;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ac-add-btn:hover {
+  background: #6d28d9;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+/* --- Search Bar Section --- */
+.ac-search-wrapper {
+  margin-bottom: 25px;
+  background: #090e1a;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ac-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ac-search-bar input {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  width: 100%;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.ac-search-bar input::placeholder {
+  color: #64748b;
+}
+
+/* --- Table Section --- */
+.ac-table-wrapper {
+  background: #090e1a;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px 30px;
+  overflow-x: auto;
+}
+
+.ac-table-inner {
+  min-width: 1350px; /* Widened to fit the extra 7th column perfectly */
+}
+
+/* Perfect Grid Alignment for 7 Columns */
+.ac-table-header,
+.ac-table-row {
+  display: grid;
+  /* # | Course | Instructor | Level | Cert List | Select Skill | Actions */
+  grid-template-columns: 0.5fr 2fr 1.8fr 1fr 1.5fr 1.5fr 210px;
+  align-items: center;
+  gap: 10px; 
+}
+
+.ac-table-row {
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  font-size: 0.95rem;
+}
+
+.ac-table-row:last-child {
+  border-bottom: none;
+}
+
+/* Specific styling for the header row */
+.ac-table-header {
+  color: #c084fc;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ac-col {
+  color: #94a3b8;
+  padding-right: 15px;
+  white-space: nowrap;
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+
+/* Allow BOTH dropdowns and buttons to overflow visibly */
+.ac-table-header > div:nth-last-child(1),
+.ac-table-header > div:nth-last-child(2),
+.ac-table-header > div:nth-last-child(3),
+.ac-table-row > div:nth-last-child(1),
+.ac-table-row > div:nth-last-child(2),
+.ac-table-row > div:nth-last-child(3) {
+  overflow: visible;
+  padding-right: 0;
+}
+
+.ac-col-id {
+  color: #c084fc;
+  font-weight: 600;
+}
+
+.ac-col-name {
+  color: #e2e8f0;
+  font-weight: 500;
+}
+
+/* Level Badge Pill */
+.ac-level-badge {
+  display: inline-block;
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Dropdowns */
+.ac-select {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  outline: none;
+  font-size: 0.9rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23c084fc%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  padding-right: 30px;
+  width: 100%;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.ac-select:focus, .ac-select:hover {
+  border-color: rgba(139, 92, 246, 0.5);
+}
+
+.ac-select option {
+  background: #090e1a;
+  color: #ffffff;
+}
+
+/* Action Buttons */
+.ac-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.ac-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+/* Approve Button (Green) */
+.ac-btn-approve {
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #10b981;
+}
+.ac-btn-approve:not(:disabled):hover {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: #10b981;
+}
+
+/* Disabled State for Approve Button */
+.ac-btn-approve:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #64748b;
+}
+
+/* Reject Button (Red) */
+.ac-btn-reject {
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+.ac-btn-reject:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+}
+
+.ac-empty {
+  text-align: center;
+  padding: 40px 0;
+  color: #64748b;
+}
+
+/* Scrollbar styling */
+.ac-table-wrapper::-webkit-scrollbar { height: 8px; }
+.ac-table-wrapper::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 10px; }
+.ac-table-wrapper::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.3); border-radius: 10px; }
+
+/* --- Modal Overlay & Container --- */
+.ac-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.ac-modal-content {
+  background: #060913; /* Deep dark background */
+  border: 1px solid rgba(99, 102, 241, 0.4); /* Purple-blue border */
+  border-radius: 12px;
+  width: 100%;
+  max-width: 480px;
+  padding: 30px;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.ac-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.ac-modal-close:hover {
+  color: #ffffff;
+}
+
+/* Modal Text */
+.ac-modal-title {
+  color: #ffffff;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.ac-modal-subtitle {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin: 0 0 25px 0;
+}
+
+/* Modal Form Groups */
+.ac-form-group {
+  margin-bottom: 20px;
+}
+
+.ac-form-group label {
+  display: block;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.ac-required {
+  color: #ef4444; /* Red asterisk */
+}
+
+/* Inputs and Select */
+.ac-modal-input,
+.ac-modal-select-field {
+  width: 100%;
+  background: #090e1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.ac-modal-input:focus,
+.ac-modal-select-field:focus {
+  border-color: #8b5cf6;
+}
+
+.ac-modal-input::placeholder {
+  color: #64748b;
+}
+
+/* Custom Dropdown Styling */
+.ac-modal-select-field {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2394a3b8%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px;
+  cursor: pointer;
+}
+
+.ac-modal-select-field option {
+  background: #090e1a;
+  color: #ffffff;
+  padding: 10px;
+}
+
+.ac-placeholder-option {
+  color: #a855f7 !important; /* Purple placeholder text in dropdown */
+}
+
+/* Modal Actions */
+.ac-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.ac-btn-cancel {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ac-btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.ac-btn-ok {
+  background: linear-gradient(135deg, #3730a3, #7c3aed); /* Purple gradient */
+  border: none;
+  color: #ffffff;
+  padding: 10px 32px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.ac-btn-ok:hover {
+  opacity: 0.9;
+}

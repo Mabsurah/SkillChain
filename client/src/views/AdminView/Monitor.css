@@ -1,0 +1,252 @@
+/* src/views/AdminView/Monitor.css */
+
+.monitor-container {
+  max-width: 1250px;
+  margin: 0 auto;
+  color: #e2e8f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-bottom: 50px;
+}
+
+/* --- Header Section --- */
+.monitor-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+  min-height: 55px;
+}
+
+.monitor-header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.monitor-header-icon {
+  width: 55px;
+  height: 55px;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #c084fc;
+}
+
+.monitor-header-text h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+}
+
+.monitor-header-text p {
+  color: #94a3b8;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* --- Top Right Action Buttons --- */
+.monitor-header-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.monitor-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+/* Disabled State */
+.monitor-action-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Accept Button */
+.monitor-btn-accept {
+  color: #4ade80;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+.monitor-btn-accept:not(:disabled):hover {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: #4ade80;
+}
+
+/* Reject Button */
+.monitor-btn-reject {
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+.monitor-btn-reject:not(:disabled):hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+}
+
+/* Restore Button */
+.monitor-btn-restore {
+  color: #eab308;
+  border: 1px solid rgba(234, 179, 8, 0.4);
+}
+.monitor-btn-restore:not(:disabled):hover {
+  background: rgba(234, 179, 8, 0.1);
+  border-color: #eab308;
+}
+
+/* --- Controls Section (Search & Filter) --- */
+.monitor-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background: #090e1a;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.monitor-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 20px;
+  border-radius: 10px;
+  width: 400px;
+  transition: border-color 0.3s ease;
+}
+
+.monitor-search-bar:focus-within {
+  border-color: #8b5cf6;
+}
+
+.monitor-search-bar input {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  width: 100%;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.monitor-search-bar input::placeholder {
+  color: #64748b;
+}
+
+.monitor-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.monitor-dropdown select {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  padding-right: 15px;
+}
+.monitor-dropdown select option {
+  background: #090e1a;
+}
+
+/* --- Table Section (With Horizontal Scroll) --- */
+.monitor-table-wrapper {
+  background: #090e1a;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 20px 30px;
+  margin-bottom: 35px;
+  overflow-x: auto; 
+}
+
+.monitor-table-inner {
+  min-width: 1450px; 
+}
+
+.monitor-table-row {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 2.2fr 1.8fr 1.2fr 3fr;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  font-size: 0.95rem;
+  transition: background 0.2s ease;
+}
+
+.monitor-table-row.selectable-row {
+  grid-template-columns: 50px 1fr 1.5fr 2.2fr 1.8fr 1.2fr 3fr;
+  cursor: pointer;
+}
+
+.monitor-table-row.selectable-row:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.monitor-table-row.is-selected {
+  background: rgba(139, 92, 246, 0.08) !important;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.monitor-table-row:last-child {
+  border-bottom: none;
+}
+
+.monitor-table-header {
+  color: #c084fc;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.monitor-col {
+  color: #94a3b8;
+  padding-right: 20px;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.monitor-col.highlight-text {
+  color: #e2e8f0; 
+  font-weight: 500;
+}
+
+.monitor-radio {
+  accent-color: #8b5cf6;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.monitor-empty-state {
+  text-align: center;
+  padding: 50px 0;
+  color: #64748b;
+}
+
+.monitor-table-wrapper::-webkit-scrollbar { height: 8px; }
+.monitor-table-wrapper::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 10px; }
+.monitor-table-wrapper::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.3); border-radius: 10px; }
+.monitor-table-wrapper::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.6); }

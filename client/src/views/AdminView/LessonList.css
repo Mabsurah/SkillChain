@@ -1,0 +1,121 @@
+/* src/views/ParticipantView/LessonList.css */
+
+.lesson-list-container {
+  max-width: 900px;
+  margin: 0 auto;
+  color: #e2e8f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-bottom: 50px;
+}
+
+/* Header Section */
+.ll-header-section {
+  margin-bottom: 35px;
+}
+
+.ll-header-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+}
+
+.ll-header-section p {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* List Container */
+.ll-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Individual Lesson Card */
+.ll-lesson-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #090e1a; /* Deep dark blue */
+  border: 1px solid rgba(139, 92, 246, 0.2); /* Faint purple border */
+  border-radius: 12px;
+  padding: 20px 25px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.ll-lesson-card:hover {
+  border-color: rgba(139, 92, 246, 0.5);
+  background: linear-gradient(90deg, rgba(76, 29, 149, 0.1) 0%, rgba(9, 14, 26, 1) 100%);
+  transform: translateX(4px); /* Slight slide to the right on hover */
+}
+
+/* Left Side: Number & Title */
+.ll-lesson-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* The Green Number Circle */
+.ll-number-badge {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.05); /* Very faint green bg */
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: #4ade80; /* Bright green text */
+  font-size: 1.1rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ll-lesson-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Actions Wrapper (Watch Now Button) */
+.ll-actions-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Right Side: Watch Now Button */
+.ll-watch-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(90deg, rgba(30, 58, 138, 0.2), rgba(88, 28, 135, 0.2));
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  color: #e2e8f0;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ll-watch-btn:hover {
+  background: linear-gradient(90deg, rgba(30, 58, 138, 0.6), rgba(88, 28, 135, 0.6));
+  border-color: #a855f7;
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+}
+
+.ll-btn-icon {
+  color: #c084fc;
+}
+
+.ll-watch-btn:hover .ll-btn-icon {
+  color: #ffffff;
+}
