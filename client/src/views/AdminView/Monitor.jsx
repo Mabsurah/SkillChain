@@ -1,58 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Users, Search, Filter, Check, X, RotateCcw } from 'lucide-react';
 import './Monitor.css';
 
 const Monitor = () => {
-  const [users, setUsers] = useState([
-    { 
-      id: 'USR10001', 
-      firstName: 'Toukir', lastName: 'Ahmed', 
-      email: 'taukir.ahmed@example.com', 
-      phone: '+8801711000000', altPhone: '+8801711000001', 
-      dob: '15/08/1998', 
-      houseNo: '10', roadNo: '32', area: 'Dhanmondi', city: 'Dhaka', district: 'Dhaka', division: 'Dhaka',
-      status: 'Pending' 
-    },
-    { 
-      id: 'USR10002', 
-      firstName: 'Nusrat', lastName: 'Jahan', 
-      email: 'nusrat.jahan@example.com', 
-      phone: '+8801812000001', altPhone: '', 
-      dob: '22/02/2000', 
-      houseNo: '45', roadNo: '2', area: 'Mirpur', city: 'Dhaka', district: 'Dhaka', division: 'Dhaka',
-      status: 'Pending' 
-    },
-    { 
-      id: 'USR10003', 
-      firstName: 'Sabbir', lastName: 'Rahman', 
-      email: 'sabbir.rahman@example.com', 
-      phone: '+8801913000002', altPhone: '+8801913000099', 
-      dob: '05/01/1999', 
-      houseNo: '12', roadNo: '7', area: 'Uttara', city: 'Dhaka', district: 'Dhaka', division: 'Dhaka',
-      status: 'Accepted' 
-    },
-    { 
-      id: 'USR10004', 
-      firstName: 'Farhana', lastName: 'Islam', 
-      email: 'farhana.islam@example.com', 
-      phone: '+8801614000003', altPhone: '', 
-      dob: '30/09/2001', 
-      houseNo: '88', roadNo: '14', area: 'Agrabad', city: 'Chattogram', district: 'Chattogram', division: 'Chattogram',
-      status: 'Rejected' 
-    },
-  ]);
+  const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Loading state add kora holo
 
   const [filterStatus, setFilterStatus] = useState('Pending');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUserId, setSelectedUserId] = useState(null);
+
+  // Database theke Data Fetch Kora
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/admin/monitor');
+        const data = await response.json();
+        
+        // Oracle-er data ke tomar frontend format-e map kora
+        const formattedData = data.map(u => ({
+          id: u.PARTICIPANT_ID,
+          firstName: u.FIRST_NAME || '',
+          lastName: u.LAST_NAME || '',
+          email: u.EMAIL,
+          phone: u.PHONE_NUMBERS || 'N/A', 
+          altPhone: '', // Backend theke sob phone comma diye eksathe ashbe
+          dob: u.DOB || 'N/A',
+          houseNo: u.ADDRESS_HOUSE || '',
+          roadNo: u.ADDRESS_ROAD || '',
+          area: u.ADDRESS_AREA || '',
+          city: u.ADDRESS_CITY || '',
+          district: u.ADDRESS_DISTRICT || '',
+          division: u.ADDRESS_DIVISION || '',
+          status: u.MONITOR_STATUS // Pending, Verified, Rejected
+        }));
+
+        setUsers(formattedData);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching monitor users:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   const handleFilterChange = (e) => {
     setFilterStatus(e.target.value);
     setSelectedUserId(null); 
   };
 
+  // Nicher action gulo ekhon local state update korche. Future-e ekhane PUT/POST API hobe.
   const handleAccept = () => {
-    setUsers(prev => prev.map(u => u.id === selectedUserId ? { ...u, status: 'Accepted' } : u));
+    setUsers(prev => prev.map(u => u.id === selectedUserId ? { ...u, status: 'Verified' } : u));
     setSelectedUserId(null);
   };
 
@@ -71,7 +72,7 @@ const Monitor = () => {
     
     const searchLower = searchQuery.toLowerCase();
     const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
-    const allPhones = `${user.phone} ${user.altPhone}`.toLowerCase();
+    const allPhones = user.phone.toLowerCase();
     const fullAddress = `h-${user.houseNo} r-${user.roadNo} ${user.area} ${user.city} ${user.district} ${user.division}`.toLowerCase();
     
     const matchesSearch = 
@@ -101,7 +102,7 @@ const Monitor = () => {
           </div>
         </div>
 
-        {/* Action Buttons: Displayed based on active filter, disabled until row is selected */}
+        {/* Action Buttons */}
         <div className="monitor-header-actions">
           {filterStatus === 'Pending' && (
             <>
@@ -110,7 +111,7 @@ const Monitor = () => {
                 onClick={handleAccept}
                 disabled={!selectedUserId}
               >
-                <Check size={18} /> Accept
+                <Check size={18} /> Verify
               </button>
               <button 
                 className="monitor-action-btn monitor-btn-reject" 
@@ -150,7 +151,7 @@ const Monitor = () => {
           <select value={filterStatus} onChange={handleFilterChange}>
             <option value="All">All Status</option>
             <option value="Pending">Pending</option>
-            <option value="Accepted">Accepted</option>
+            <option value="Verified">Verified</option>
             <option value="Rejected">Rejected</option>
           </select>
         </div>
@@ -169,10 +170,13 @@ const Monitor = () => {
             <div className="monitor-col">Full Address</div>
           </div>
 
-          {filteredUsers.length > 0 ? (
+          {isLoading ? (
+             <div style={{ padding: '40px', textAlign: 'center', color: '#64748b' }}>
+               Loading real data from Oracle 11g Database...
+             </div>
+          ) : filteredUsers.length > 0 ? (
             filteredUsers.map((user) => {
               const fullName = `${user.firstName} ${user.lastName}`;
-              const phoneString = user.altPhone ? `${user.phone}, ${user.altPhone}` : user.phone;
               const addressString = `H-${user.houseNo}, R-${user.roadNo}, ${user.area}, ${user.city}, ${user.district}, ${user.division} Div.`;
               
               const isSelected = selectedUserId === user.id;
@@ -199,9 +203,9 @@ const Monitor = () => {
                   <div className="monitor-col highlight-text">{user.id}</div>
                   <div className="monitor-col highlight-text" title={fullName}>{fullName}</div>
                   <div className="monitor-col" title={user.email}>{user.email}</div>
-                  <div className="monitor-col" title={phoneString}>{phoneString}</div>
+                  <div className="monitor-col" title={user.phone}>{user.phone}</div>
                   <div className="monitor-col">{user.dob}</div>
-                  <div className="monitor-col" title={`${addressString}, ${user.division} Division`}>{addressString}</div>
+                  <div className="monitor-col" title={`${addressString}`}>{addressString}</div>
                 </div>
               );
             })

@@ -1,23 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FileText, Search, Trash2, UserX, Star } from 'lucide-react';
 import './CourseReport.css';
 
 const CourseReport = () => {
-  // Mock data with courseRating and instructorAvgRating
-  const [reports] = useState([
-    { id: '01', courseName: 'C Programming', instructorName: 'Taukir Ahmed', courseRating: 4.8, instructorAvgRating: 4.7 },
-    { id: '02', courseName: 'Python for Beginners', instructorName: 'Nusrat Jahan', courseRating: 4.9, instructorAvgRating: 4.9 },
-    { id: '03', courseName: 'Data Structures in C', instructorName: 'Sabbir Rahman', courseRating: 4.2, instructorAvgRating: 4.5 },
-    { id: '04', courseName: 'Web Development Basics', instructorName: 'Farhana Islam', courseRating: 4.5, instructorAvgRating: 4.6 },
-    { id: '05', courseName: 'Java Programming', instructorName: 'Mehedi Hasan', courseRating: 3.8, instructorAvgRating: 4.1 },
-    { id: '06', courseName: 'Database Management', instructorName: 'Rifat Mahmud', courseRating: 4.1, instructorAvgRating: 3.9 }, 
-    { id: '07', courseName: 'JavaScript Essentials', instructorName: 'Tanjila Akter', courseRating: 4.7, instructorAvgRating: 4.8 },
-    { id: '08', courseName: 'Object Oriented Programming', instructorName: 'Imran Hossain', courseRating: 4.4, instructorAvgRating: 4.6 },
-    { id: '09', courseName: 'Digital Marketing Basics', instructorName: 'Jannatul Ferdous', courseRating: 3.5, instructorAvgRating: 3.8 }, 
-    { id: '10', courseName: 'Linux Fundamentals', instructorName: 'Arifur Rahman', courseRating: 4.6, instructorAvgRating: 4.5 },
-  ]);
-
+  const [reports, setReports] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Database theke (VIEW use kore) data fetch kora
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/admin/reports');
+        const data = await response.json();
+        
+        // Oracle theke asha uppercase data map kora
+        const formattedData = data.map(rep => ({
+          id: rep.COURSE_ID,
+          courseName: rep.COURSE_NAME || '',
+          instructorName: rep.INSTRUCTOR_NAME || '',
+          courseRating: Number(rep.COURSE_RATING) || 0,
+          instructorAvgRating: Number(rep.INSTRUCTOR_AVG_RATING) || 0
+        }));
+
+        setReports(formattedData);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching reports:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchReports();
+  }, []);
 
   // 1. First, filter based on the search bar
   const filteredReports = reports.filter(rep => 
@@ -31,16 +46,18 @@ const CourseReport = () => {
     if (a.courseRating !== b.courseRating) {
       return a.courseRating - b.courseRating; 
     }
-    // Secondary Sort (if Course Ratings are equal): Instructor Avg Rating (Lowest First)
+    // Secondary Sort: Instructor Avg Rating (Lowest First)
     return a.instructorAvgRating - b.instructorAvgRating;
   });
 
   const handleDeleteCourse = (id) => {
     alert(`Deleting course with ID: ${id}`);
+    // Future-e ekhane DELETE API call hobe
   };
 
   const handleDeleteInstructor = (id, instructorName) => {
-    alert(`Removing instructor ${instructorName} for report ID: ${id}`);
+    alert(`Removing instructor ${instructorName} for course ID: ${id}`);
+    // Future-e ekhane DELETE/UPDATE API call hobe
   };
 
   return (
@@ -83,18 +100,18 @@ const CourseReport = () => {
             <div className="cr-col">Activities</div>
           </div>
 
-          {sortedReports.length > 0 ? (
-            // Added 'index' to perfectly serialize the row numbers
+          {isLoading ? (
+            <div style={{ padding: '40px', textAlign: 'center', color: '#64748b' }}>
+               Loading real course reports from Oracle 11g...
+            </div>
+          ) : sortedReports.length > 0 ? (
             sortedReports.map((report, index) => {
               // Rule: If Instructor's avg rating is >= 4.5, disable the Delete Instructor button
               const isInstructorDeletable = report.instructorAvgRating < 4.5;
-              
-              // Format index to always be two digits (01, 02, etc.)
               const serialIndex = String(index + 1).padStart(2, '0');
 
               return (
                 <div className="cr-table-row" key={report.id}>
-                  {/* Now displaying the serial index instead of the raw ID */}
                   <div className="cr-col cr-col-id">{serialIndex}</div>
                   <div className="cr-col cr-col-name">{report.courseName}</div>
                   <div className="cr-col">{report.instructorName}</div>
@@ -128,7 +145,6 @@ const CourseReport = () => {
                       <UserX size={15} /> Delete Instructor
                     </button>
                   </div>
-
                 </div>
               );
             })
