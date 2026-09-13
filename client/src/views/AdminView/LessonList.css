@@ -1,121 +1,113 @@
-/* src/views/ParticipantView/LessonList.css */
-
+/* Admin LessonList Enhanced Styles */
 .lesson-list-container {
-  max-width: 900px;
-  margin: 0 auto;
-  color: #e2e8f0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding-bottom: 50px;
+  padding: 32px 36px;
+  max-width: 100%;
+  width: 100%;
+  animation: fadeIn 0.4s ease;
+  box-sizing: border-box;
 }
 
-/* Header Section */
 .ll-header-section {
-  margin-bottom: 35px;
+  margin-bottom: 26px;
 }
 
 .ll-header-section h2 {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0 0 10px 0;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, var(--text-primary), var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 6px;
 }
 
 .ll-header-section p {
-  color: #94a3b8;
-  font-size: 1.1rem;
-  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
 
-/* List Container */
 .ll-list-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
-/* Individual Lesson Card */
 .ll-lesson-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 26px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: #090e1a; /* Deep dark blue */
-  border: 1px solid rgba(139, 92, 246, 0.2); /* Faint purple border */
-  border-radius: 12px;
-  padding: 20px 25px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+  gap: 20px;
+  transition: all var(--transition);
 }
 
 .ll-lesson-card:hover {
-  border-color: rgba(139, 92, 246, 0.5);
-  background: linear-gradient(90deg, rgba(76, 29, 149, 0.1) 0%, rgba(9, 14, 26, 1) 100%);
-  transform: translateX(4px); /* Slight slide to the right on hover */
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
 
-/* Left Side: Number & Title */
 .ll-lesson-info {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
 }
 
-/* The Green Number Circle */
 .ll-number-badge {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
   border-radius: 50%;
-  background: rgba(16, 185, 129, 0.05); /* Very faint green bg */
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  color: #4ade80; /* Bright green text */
-  font-size: 1.1rem;
-  font-weight: 700;
+  background: var(--accent-subtle);
+  border: 1px solid var(--border-accent);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent-light);
 }
 
 .ll-lesson-title {
-  font-size: 1.25rem;
+  font-size: 16px;
   font-weight: 600;
-  color: #ffffff;
-  margin: 0;
+  color: var(--text-primary);
+  line-height: 1.4;
 }
 
-/* Actions Wrapper (Watch Now Button) */
 .ll-actions-wrapper {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-/* Right Side: Watch Now Button */
 .ll-watch-btn {
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: linear-gradient(90deg, rgba(30, 58, 138, 0.2), rgba(88, 28, 135, 0.2));
-  border: 1px solid rgba(139, 92, 246, 0.4);
-  color: #e2e8f0;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: var(--shadow-accent);
+  transition: all var(--transition);
 }
 
 .ll-watch-btn:hover {
-  background: linear-gradient(90deg, rgba(30, 58, 138, 0.6), rgba(88, 28, 135, 0.6));
-  border-color: #a855f7;
-  color: #ffffff;
-  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px var(--accent-glow);
 }
 
 .ll-btn-icon {
-  color: #c084fc;
+  transition: transform var(--transition);
 }
 
 .ll-watch-btn:hover .ll-btn-icon {
-  color: #ffffff;
+  transform: translateX(3px);
 }

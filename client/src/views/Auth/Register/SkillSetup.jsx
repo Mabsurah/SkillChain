@@ -1,14 +1,15 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Users, CloudUpload, Award, BookOpen, Heart, CheckCircle2 } from 'lucide-react';
+import { api } from '../../../services/api';
 import './SkillSetup.css';
 
 const SkillSetup = ({ formData }) => {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
-
-  // State to track the uploaded file
   const [uploadedFile, setUploadedFile] = useState(null);
+  const [uploadedFileBase64, setUploadedFileBase64] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const handleUploadClick = () => {
     fileInputRef.current.click();
@@ -16,13 +17,39 @@ const SkillSetup = ({ formData }) => {
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setUploadedFile(e.target.files[0]);
+      const file = e.target.files[0];
+      setUploadedFile(file);
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setUploadedFileBase64(event.target.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
-  const handleCompleteRegistration = () => {
-    alert("Registration Successful! Please log in to access your dashboard.");
-    navigate('/login');
+  const handleCompleteRegistration = async (selectedRole) => {
+    setSubmitting(true);
+    try {
+      const payload = {
+        ...formData,
+        role: selectedRole || 'participant',
+        certificateName: uploadedFile ? uploadedFile.name : null,
+        imageBase64: uploadedFileBase64 || null
+      };
+
+      const res = await api.register(payload);
+      if (res && res.success) {
+        alert(`✅ [DATABASE REGISTRATION SUCCESSFUL]\nUser and Participant records created and committed in Oracle Database!\n\n${res.message}`);
+        navigate('/login');
+      } else {
+        alert(`⚠️ Registration Not Saved to Database:\n\n${res?.message || 'Could not complete registration in database.'}`);
+      }
+    } catch (err) {
+      alert(`⚠️ Registration Error: ${err.message || 'Failed to connect to backend server.'}`);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -36,7 +63,7 @@ const SkillSetup = ({ formData }) => {
           <h2>Choose Your Role</h2>
           <span className="accent-dash accent-pink">-=</span>
         </div>
-        <p>Pick the option that best describes you.</p>
+        <p>Pick the option that best describes your intent in the platform.</p>
       </div>
 
       <div className="cards-container">
@@ -51,9 +78,9 @@ const SkillSetup = ({ formData }) => {
           </div>
           
           <h3>Are You Here<br/>To Contribute?</h3>
-          <div className="role-tag teacher-tag">| Teacher |</div>
+          <div className="role-tag teacher-tag">| Instructor |</div>
           <p className="role-desc">
-            Upload your certificate<br/>and join directly to help others.
+            Upload your certificate<br/>and join directly to teach and contribute.
           </p>
 
           <input 
@@ -64,7 +91,6 @@ const SkillSetup = ({ formData }) => {
             accept="image/*,.pdf"
           />
           
-          {/* Changes button look and text when file is uploaded */}
           <button 
             className={`upload-btn ${uploadedFile ? 'file-uploaded' : ''}`} 
             onClick={handleUploadClick}
@@ -82,13 +108,12 @@ const SkillSetup = ({ formData }) => {
             )}
           </button>
           
-          {/* Submit button disabled until file is selected */}
           <button 
             className="submit-btn" 
-            onClick={handleCompleteRegistration}
-            disabled={!uploadedFile}
+            onClick={() => handleCompleteRegistration('instructor')}
+            disabled={!uploadedFile || submitting}
           >
-            Submit
+            {submitting ? 'Registering...' : 'Submit to Database'}
           </button>
         </div>
 
@@ -99,14 +124,18 @@ const SkillSetup = ({ formData }) => {
           </div>
           
           <h3>Don't Have<br/>Any Skill?</h3>
-          <div className="role-tag newbie-tag">| Newbie |</div>
+          <div className="role-tag newbie-tag">| Newbie Learner |</div>
           <p className="role-desc">
             No need to worry!<br/>Learn first and contribute later.
           </p>
 
-          <button className="enroll-btn" onClick={handleCompleteRegistration}>
+          <button 
+            className="enroll-btn" 
+            onClick={() => handleCompleteRegistration('participant')}
+            disabled={submitting}
+          >
             <BookOpen size={20} style={{marginRight: '8px', verticalAlign: 'text-bottom'}} />
-            Enroll as a Newbie
+            {submitting ? 'Registering...' : 'Enroll as a Newbie'}
           </button>
         </div>
 

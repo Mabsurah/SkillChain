@@ -1,6 +1,16 @@
 {
+  "name": "skillchain",
+  "version": "1.0.0",
+  "description": "SkillChain - Full Stack Oracle DB Learning and Verification Platform",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node server/server.js",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
   "dependencies": {
     "bootstrap": "^5.3.8",
+    "concurrently": "^9.1.2",
     "lucide-react": "^1.28.0",
     "react-bootstrap": "^2.10.10",
     "react-router-dom": "^7.18.2"

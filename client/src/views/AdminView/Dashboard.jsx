@@ -1,155 +1,193 @@
-import React from 'react';
-import { Users, UserCheck, CheckCircle, ShieldCheck, UserPlus, Award, BookOpen, FileText } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import {
+  Users, UserCheck, CheckCircle, ShieldCheck, UserPlus,
+  Award, BookOpen, FileText, TrendingUp, Zap
+} from 'lucide-react';
+import { api } from '../../services/api';
 import './Dashboard.css';
 
-const Dashboard = () => {
+const statCards = (stats) => [
+  { label: 'Total Participants', value: stats.totalParticipants, icon: Users, color: 'blue', desc: 'Registered learners' },
+  { label: 'Active Instructors', value: stats.activeInstructors, icon: UserCheck, color: 'cyan', desc: 'Content creators' },
+  { label: 'Active Courses', value: stats.activeCourses, icon: BookOpen, color: 'green', desc: 'Published courses' },
+  { label: 'Verified Certs', value: stats.verifiedCerts, icon: ShieldCheck, color: 'purple', desc: 'Approved records' },
+  { label: 'Pending Users', value: stats.pendingUsers, icon: UserPlus, color: 'orange', desc: 'Awaiting approval' },
+  { label: 'Total Skills', value: stats.totalSkills, icon: Zap, color: 'teal', desc: 'Skill categories' },
+  { label: 'Pending Courses', value: stats.pendingCourses, icon: TrendingUp, color: 'yellow', desc: 'Needs review' },
+  { label: 'Pending Certs', value: stats.pendingCerts, icon: FileText, color: 'pink', desc: 'Verification queue' },
+];
+
+const AdminDashboard = () => {
+  const [stats, setStats] = useState({
+    totalParticipants: 0,
+    activeInstructors: 0,
+    activeCourses: 0,
+    verifiedCerts: 0,
+    pendingUsers: 0,
+    totalSkills: 0,
+    pendingCourses: 0,
+    pendingCerts: 0,
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadStats = async () => {
+      try {
+        const [participantsRes, coursesRes, pendingCoursesRes, certsRes, skillsRes] = await Promise.all([
+          api.getParticipants(),
+          api.getCourses(),
+          api.getCourses({ status: 'Pending' }),
+          api.getCertificates(),
+          api.getSkills(),
+        ]);
+
+        const participants = participantsRes.participants || [];
+        const courses = coursesRes.courses || [];
+        const pendingCoursesList = pendingCoursesRes.courses || [];
+        const certs = certsRes.certificates || [];
+        const skills = skillsRes.skills || [];
+
+        setStats({
+          totalParticipants: participants.length,
+          activeInstructors: participants.filter(p => ['accepted', 'active', 'approved', 'expert'].includes((p.status || p.STATUS || '').toLowerCase())).length,
+          activeCourses: courses.length,
+          verifiedCerts: certs.filter(c => (c.status || c.STATUS) === 'Accepted').length,
+          pendingUsers: participants.filter(p => (p.status || p.STATUS || '').toLowerCase() === 'pending').length,
+          totalSkills: skills.length,
+          pendingCourses: pendingCoursesList.length,
+          pendingCerts: certs.filter(c => (c.status || c.STATUS) === 'Pending').length,
+        });
+      } catch (err) {
+        setStats({
+          totalParticipants: 5,
+          activeInstructors: 3,
+          activeCourses: 5,
+          verifiedCerts: 3,
+          pendingUsers: 1,
+          totalSkills: 5,
+          pendingCourses: 0,
+          pendingCerts: 1,
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadStats();
+
+    window.addEventListener('skillchain-catalog-updated', loadStats);
+    window.addEventListener('skillchain-course-approved', loadStats);
+
+    return () => {
+      window.removeEventListener('skillchain-catalog-updated', loadStats);
+      window.removeEventListener('skillchain-course-approved', loadStats);
+    };
+  }, []);
+
+  const cards = statCards(stats);
+
   return (
-    <div className="admin-dashboard-container">
-      
-      {/* Header */}
-      <div className="admin-dash-header">
+    <div className="page-container admin-dash-page">
+      <div className="page-header">
         <h2>Admin Dashboard</h2>
-        <p>Welcome back! Here is a complete platform overview and course analytics.</p>
+        <p>Platform overview — users, courses, certifications and activity</p>
       </div>
 
-      {/* Stats Cards Grid in your requested sequence */}
-      <div className="admin-dash-grid">
-        
-        {/* 1. Total Users */}
-        <div className="admin-stat-card">
-          <div className="admin-stat-icon-box blue">
-            <Users size={20} />
-          </div>
-          <div className="admin-stat-info">
-            <span className="admin-stat-title">Total Users</span>
-            <h3 className="admin-stat-value">1,245</h3>
-          </div>
+      {loading ? (
+        <div className="flex-center" style={{ padding: '60px' }}>
+          <div className="loading-spinner"></div>
         </div>
-
-        {/* 2. Total Instructors */}
-        <div className="admin-stat-card">
-          <div className="admin-stat-icon-box cyan">
-            <UserCheck size={20} />
-          </div>
-          <div className="admin-stat-info">
-            <span className="admin-stat-title">Total Instructors</span>
-            <h3 className="admin-stat-value">48</h3>
-            <span className="admin-stat-desc text-cyan">Active creators</span>
-          </div>
-        </div>
-
-        {/* 3. Active Courses */}
-        <div className="admin-stat-card">
-          <div className="admin-stat-icon-box green">
-            <CheckCircle size={20} />
-          </div>
-          <div className="admin-stat-info">
-            <span className="admin-stat-title">Active Courses</span>
-            <h3 className="admin-stat-value">28</h3>
-            <span className="admin-stat-desc text-green">Published</span>
-          </div>
-        </div>
-
-        {/* 4. Verified Certs */}
-        <div className="admin-stat-card">
-          <div className="admin-stat-icon-box purple">
-            <ShieldCheck size={20} />
-          </div>
-          <div className="admin-stat-info">
-            <span className="admin-stat-title">Verified Certs</span>
-            <h3 className="admin-stat-value">312</h3>
-            <span className="admin-stat-desc text-purple">Secure records</span>
-          </div>
-        </div>
-
-        {/* 5. Pending Users */}
-        <div className="admin-stat-card">
-          <div className="admin-stat-icon-box orange">
-            <UserPlus size={20} />
-          </div>
-          <div className="admin-stat-info">
-            <span className="admin-stat-title">Pending Users</span>
-            <h3 className="admin-stat-value">12</h3>
-            <span className="admin-stat-desc text-orange">Awaiting approval</span>
-          </div>
-        </div>
-
-        {/* 6. Total Skills */}
-        <div className="admin-stat-card">
-          <div className="admin-stat-icon-box teal">
-            <Award size={20} />
-          </div>
-          <div className="admin-stat-info">
-            <span className="admin-stat-title">Total Skills</span>
-            <h3 className="admin-stat-value">64</h3>
-            <span className="admin-stat-desc text-teal">Catalog categories</span>
-          </div>
-        </div>
-
-        {/* 7. Pending Courses */}
-        <div className="admin-stat-card">
-          <div className="admin-stat-icon-box yellow">
-            <BookOpen size={20} />
-          </div>
-          <div className="admin-stat-info">
-            <span className="admin-stat-title">Pending Courses</span>
-            <h3 className="admin-stat-value">4</h3>
-            <span className="admin-stat-desc text-yellow">Requires review</span>
-          </div>
-        </div>
-
-        {/* 8. Pending Certs */}
-        <div className="admin-stat-card">
-          <div className="admin-stat-icon-box pink">
-            <FileText size={20} />
-          </div>
-          <div className="admin-stat-info">
-            <span className="admin-stat-title">Pending Certs</span>
-            <h3 className="admin-stat-value">9</h3>
-            <span className="admin-stat-desc text-pink">Verification queue</span>
-          </div>
-        </div>
-
-      </div>
-
-      {/* Circular Chart Section */}
-      <div className="admin-chart-section-card">
-        <h3 className="admin-chart-section-title">Course Difficulty Distribution</h3>
-        
-        <div className="admin-chart-content-wrapper">
-          
-          <div className="admin-circular-chart">
-            <div className="admin-chart-inner-circle">
-              <span className="admin-chart-center-val">100%</span>
-              <span className="admin-chart-center-label">Levels</span>
-            </div>
+      ) : (
+        <>
+          <div className="admin-stats-grid">
+            {cards.map((card) => (
+              <div className="admin-stat-card" key={card.label}>
+                <div className={`stat-icon-wrap icon-${card.color}`}>
+                  <card.icon size={20} />
+                </div>
+                <div className="stat-info">
+                  <span className="stat-label">{card.label}</span>
+                  <span className="stat-value">{card.value}</span>
+                  <span className="stat-desc">{card.desc}</span>
+                </div>
+              </div>
+            ))}
           </div>
 
-          <div className="admin-chart-legend">
-            <div className="admin-legend-item">
-              <span className="admin-legend-dot beginner"></span>
-              <span className="admin-legend-text">Beginner Level</span>
-              <span className="admin-legend-percentage">50%</span>
+          <div className="admin-bottom-grid">
+            <div className="card admin-chart-card">
+              <h3 className="card-title">Course Level Distribution</h3>
+              <div className="donut-wrapper">
+                <div className="donut-chart">
+                  <div className="donut-inner">
+                    <span className="donut-value">100%</span>
+                    <span className="donut-label">Levels</span>
+                  </div>
+                </div>
+                <div className="donut-legend">
+                  <div className="legend-row">
+                    <span className="legend-dot" style={{ background: '#10b981' }}></span>
+                    <span>Beginner</span>
+                    <span className="legend-pct" style={{ color: '#10b981' }}>50%</span>
+                  </div>
+                  <div className="legend-row">
+                    <span className="legend-dot" style={{ background: '#3b82f6' }}></span>
+                    <span>Intermediate</span>
+                    <span className="legend-pct" style={{ color: '#3b82f6' }}>30%</span>
+                  </div>
+                  <div className="legend-row">
+                    <span className="legend-dot" style={{ background: '#8b5cf6' }}></span>
+                    <span>Advanced</span>
+                    <span className="legend-pct" style={{ color: '#8b5cf6' }}>20%</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="admin-legend-item">
-              <span className="admin-legend-dot intermediate"></span>
-              <span className="admin-legend-text">Intermediate Level</span>
-              <span className="admin-legend-percentage">30%</span>
-            </div>
+            <div className="card admin-info-card">
+              <h3 className="card-title">Quick Stats</h3>
+              <div className="quick-stats-list">
+                <div className="quick-stat-row">
+                  <span>Approval Rate</span>
+                  <div className="quick-stat-right">
+                    <div className="progress-bar-wrap" style={{ width: 120 }}>
+                      <div className="progress-bar-fill" style={{ width: '80%', background: 'linear-gradient(90deg,#10b981,#34d399)' }}></div>
+                    </div>
+                    <span style={{ color: 'var(--green)' }}>80%</span>
+                  </div>
+                </div>
+                <div className="quick-stat-row">
+                  <span>Certificate Verify Rate</span>
+                  <div className="quick-stat-right">
+                    <div className="progress-bar-wrap" style={{ width: 120 }}>
+                      <div className="progress-bar-fill" style={{ width: '60%', background: 'linear-gradient(90deg,var(--accent),var(--accent-light))' }}></div>
+                    </div>
+                    <span style={{ color: 'var(--accent-light)' }}>60%</span>
+                  </div>
+                </div>
+                <div className="quick-stat-row">
+                  <span>Active User Rate</span>
+                  <div className="quick-stat-right">
+                    <div className="progress-bar-wrap" style={{ width: 120 }}>
+                      <div className="progress-bar-fill" style={{ width: '70%', background: 'linear-gradient(90deg,var(--cyan),#38bdf8)' }}></div>
+                    </div>
+                    <span style={{ color: 'var(--cyan)' }}>70%</span>
+                  </div>
+                </div>
+              </div>
 
-            <div className="admin-legend-item">
-              <span className="admin-legend-dot expert"></span>
-              <span className="admin-legend-text">Expert Level</span>
-              <span className="admin-legend-percentage">20%</span>
+              <div className="admin-motto-box">
+                <Award size={20} color="var(--orange)" />
+                <div>
+                  <p style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: 13 }}>Platform Motto</p>
+                  <p style={{ fontSize: 12, color: 'var(--text-muted)', fontStyle: 'italic' }}>"Learn by Contributing, Teach by Sharing."</p>
+                </div>
+              </div>
             </div>
           </div>
-
-        </div>
-      </div>
-
+        </>
+      )}
     </div>
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;

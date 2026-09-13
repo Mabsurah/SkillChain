@@ -1,79 +1,81 @@
-import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { 
-  Link2, Home, User, BookOpen, HandHeart, 
-  Share2, MessageCircle, ClipboardList, TrendingUp, Bell, ChevronRight, LogOut 
-} from 'lucide-react'; 
-import './ParticipantNav.css'; // Connects the sidebar styling!
+import React, { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import {
+  LayoutDashboard, Zap, BookMarked,
+  BarChart2, ClipboardCheck, Users2, Bell,
+  User, Upload, LogOut, ChevronLeft, ChevronRight,
+  Star, Database
+} from 'lucide-react';
+import './ParticipantNav.css';
+
+const navItems = [
+  { to: '/participant/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/participant/skillhub', icon: Zap, label: 'Skill Hub' },
+  { to: '/participant/my-courses', icon: BookMarked, label: 'My Courses' },
+  { to: '/participant/track', icon: BarChart2, label: 'Track Progress' },
+  { to: '/participant/exam', icon: ClipboardCheck, label: 'Exams' },
+  { to: '/participant/peer-review', icon: Star, label: 'Peer Review' },
+  { to: '/participant/contribution', icon: Upload, label: 'Contribution' },
+  { to: '/participant/notifications', icon: Bell, label: 'Notifications' },
+  { to: '/participant/profile', icon: User, label: 'Profile' },
+];
 
 const ParticipantNav = () => {
-  const location = useLocation(); 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const [collapsed, setCollapsed] = useState(false);
 
-  // The Security Logic: Destroy the pass and leave
   const handleLogout = () => {
-    localStorage.removeItem('userRole'); // Shreds the VIP pass
-    navigate('/login'); // Kicks them back to the login screen
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('participantId');
+    navigate('/login');
   };
 
-  // ADDED 'relatedPaths' to keep the nav highlighted when inside sub-pages!
-  const menuItems = [
-    { name: 'Dashboard', path: '/participant/dashboard', icon: Home },
-    { name: 'Profile', path: '/participant/profile', icon: User },
-    { name: 'My Courses', path: '/participant/my-courses', icon: BookOpen, relatedPaths: ['/participant/lesson-list'] },
-    { name: 'Contribution', path: '/participant/contribution', icon: HandHeart, relatedPaths: ['/participant/content-list'] },
-    { name: 'SkillHub', path: '/participant/skillhub', icon: Share2 },
-    { name: 'Peer Review', path: '/participant/peer-review', icon: MessageCircle, relatedPaths: ['/participant/review-content'] },
-    { name: 'Exam', path: '/participant/exam', icon: ClipboardList },
-    { name: 'Track Progress', path: '/participant/track', icon: TrendingUp },
-    { name: 'Notifications', path: '/participant/notifications', icon: Bell, hasDot: true },
-  ];
-
   return (
-    <div className="sidebar-container">
-      
-      {/* Logo Section */}
+    <aside className={`participant-sidebar ${collapsed ? 'collapsed' : ''}`}>
       <div className="sidebar-logo">
-        <Link2 size={36} className="logo-icon" strokeWidth={2.5} />
-        <h2>SkillChain</h2>
+        <div className="logo-icon">
+          <Zap size={18} />
+        </div>
+        {!collapsed && <span className="logo-text">SkillChain</span>}
       </div>
 
-      {/* Navigation Links */}
-      <div className="nav-menu">
-        {menuItems.map((item, index) => {
-          
-          // NEW LOGIC: Checks if current URL is the exact path OR includes any related paths
-          const isActive = location.pathname === item.path || 
-                           (item.relatedPaths && item.relatedPaths.some(p => location.pathname.includes(p)));
+      {!collapsed && (
+        <div className="sidebar-role-badge participant-badge">
+          <span>Participant Portal</span>
+        </div>
+      )}
 
-          return (
-            <Link 
-              key={index} 
-              to={item.path} 
-              className={`nav-item ${isActive ? 'active' : ''}`}
-            >
-              <div className="nav-item-left">
-                <div className="notification-wrapper">
-                  <item.icon size={22} className="nav-icon" />
-                  {item.hasDot && <span className="red-dot"></span>}
-                </div>
-                <span>{item.name}</span>
-              </div>
-              <ChevronRight size={18} className="nav-chevron" />
-            </Link>
-          );
-        })}
-      </div>
+      <nav className="sidebar-nav">
+        {navItems.map(({ to, icon: Icon, label }) => (
+          <NavLink
+            key={to}
+            to={to}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+            title={collapsed ? label : ''}
+          >
+            <Icon size={18} />
+            {!collapsed && <span>{label}</span>}
+          </NavLink>
+        ))}
+      </nav>
 
-      {/* Logout Footer Section */}
       <div className="sidebar-footer">
-        <button className="logout-btn" onClick={handleLogout}>
-          <LogOut size={22} className="logout-icon" />
-          <span>Log Out</span>
+        <button className="nav-item logout-btn" onClick={handleLogout}>
+          <LogOut size={18} />
+          {!collapsed && <span>Logout</span>}
+        </button>
+        <button
+          className="collapse-btn"
+          onClick={() => setCollapsed(c => !c)}
+          title={collapsed ? 'Expand' : 'Collapse'}
+        >
+          {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
         </button>
       </div>
-
-    </div>
+    </aside>
   );
 };
 

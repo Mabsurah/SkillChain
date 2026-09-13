@@ -1,100 +1,97 @@
-/* src/views/ParticipantView/Track.css */
-
+/* Track Progress Enhanced Styles */
 .track-page-container {
-  /* DECREASED from 900px to 750px for a sleeker width */
-  max-width: 750px; 
-  margin: 0 auto;
-  color: #e2e8f0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding-bottom: 40px;
+  padding: 32px 36px;
+  max-width: 100%;
+  width: 100%;
+  animation: fadeIn 0.4s ease;
+  box-sizing: border-box;
 }
 
-/* Header Section */
 .track-header-section {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 35px;
+  margin-bottom: 28px;
 }
 
 .track-header-left h2 {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0 0 8px 0;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, var(--text-primary), var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 6px;
 }
 
 .track-header-left p {
-  color: #94a3b8;
-  font-size: 1.05rem;
-  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
 
 .track-header-icon {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--accent-subtle);
+  border: 1px solid var(--border-accent);
   display: flex;
-  justify-content: center;
   align-items: center;
-  color: #8b5cf6;
-  background: rgba(139, 92, 246, 0.05);
+  justify-content: center;
+  color: var(--accent-light);
 }
 
-/* Course Cards */
 .course-progress-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
 .progress-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 26px 32px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: #090e1a; 
-  border: 1px solid rgba(99, 102, 241, 0.15); 
-  border-radius: 16px;
-  /* DECREASED padding to shrink the height of the box */
-  padding: 24px 32px; 
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
+  justify-content: space-between;
+  gap: 28px;
+  transition: all var(--transition);
 }
 
-/* Added a premium hover lift effect */
 .progress-card:hover {
-  border-color: rgba(99, 102, 241, 0.3);
-  background: rgba(9, 14, 26, 0.8);
-  transform: translateY(-2px); 
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
 .course-info h3 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #ffffff;
-  margin: 0 0 10px 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
 }
 
 .course-info p {
-  color: #94a3b8;
-  font-size: 0.95rem;
-  margin: 0;
+  font-size: 15px;
+  color: var(--text-muted);
 }
 
-/* Circular Progress Bar - Scaled Down */
 .progress-circle-container {
   position: relative;
-  width: 110px; 
-  height: 110px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 115px;
+  height: 115px;
+  min-width: 115px;
+}
+
+.progress-circle-container svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
 }
 
 .circle-bg {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.05);
+  stroke: var(--bg-input);
   stroke-width: 8;
 }
 
@@ -102,14 +99,13 @@
   fill: none;
   stroke: url(#greenGradient);
   stroke-width: 8;
-  stroke-linecap: round; 
-  transform: rotate(-90deg); 
-  transform-origin: 50% 50%;
-  transition: stroke-dashoffset 1.5s ease-in-out;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.6s ease;
 }
 
 .progress-text {
   position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -117,15 +113,14 @@
 }
 
 .percent-val {
-  color: #4ade80;
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1;
-  margin-bottom: 2px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
 }
 
 .percent-label {
-  color: #94a3b8;
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }

@@ -1,19 +1,16 @@
-/* src/views/AdminView/CourseReport.css */
-
+/* CourseReport Enhanced Styles */
 .cr-container {
-  max-width: 1300px;
-  margin: 0 auto;
-  color: #e2e8f0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding-bottom: 50px;
+  padding: 28px;
+  max-width: 1200px;
+  width: 100%;
+  animation: fadeIn 0.4s ease;
 }
 
-/* --- Header Section --- */
 .cr-header {
   display: flex;
   align-items: center;
   gap: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 28px;
 }
 
 .cr-header-icon {
@@ -23,180 +20,147 @@
   border: 1px solid rgba(139, 92, 246, 0.2);
   border-radius: 14px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  color: #c084fc;
+  justify-content: center;
+  color: var(--accent-light);
 }
 
 .cr-header-text h2 {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0 0 6px 0;
+  font-size: 1.6rem;
+  background: linear-gradient(135deg, var(--text-primary), var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 4px;
 }
 
 .cr-header-text p {
-  color: #94a3b8;
-  font-size: 1rem;
-  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
 }
 
-/* --- Search Bar Section --- */
 .cr-search-wrapper {
-  margin-bottom: 25px;
-  background: #090e1a;
-  padding: 20px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 24px;
 }
 
 .cr-search-bar {
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 12px 20px;
-  border-radius: 10px;
-  width: 100%;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
-}
-
-.cr-search-bar:focus-within {
-  border-color: #8b5cf6;
+  gap: 10px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  max-width: 450px;
 }
 
 .cr-search-bar input {
   background: transparent;
   border: none;
-  color: #ffffff;
-  width: 100%;
-  font-size: 0.95rem;
-  outline: none;
+  padding: 0;
+  flex: 1;
 }
 
-.cr-search-bar input::placeholder {
-  color: #64748b;
+.cr-search-bar input:focus {
+  box-shadow: none;
 }
 
-/* --- Table Section --- */
 .cr-table-wrapper {
-  background: #090e1a;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
-  padding: 20px 30px;
-  margin-bottom: 25px;
-  overflow-x: auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
 }
 
 .cr-table-inner {
-  min-width: 1200px; /* Gives long text headers enough room */
+  overflow-x: auto;
 }
 
-/* Grid layout matching all columns perfectly */
-.cr-table-header,
 .cr-table-row {
   display: grid;
-  /* Hardcoded the last column to 300px to perfectly fit the two buttons */
-  grid-template-columns: 0.5fr 2.5fr 2fr 1.8fr 1.8fr 300px; 
+  grid-template-columns: 50px 2fr 1.5fr 1fr 1fr 2fr;
   align-items: center;
-  gap: 10px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition);
 }
 
-.cr-table-row {
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-  font-size: 0.95rem;
-}
-
-.cr-table-row:last-child {
-  border-bottom: none;
+.cr-table-row:hover {
+  background: var(--bg-card-hover);
 }
 
 .cr-table-header {
-  color: #c084fc;
-  font-weight: 500;
-  font-size: 0.95rem;
-  padding-bottom: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-input);
+  color: var(--accent-light);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--border);
 }
 
-/* Overflow protection for text */
 .cr-col {
-  color: #94a3b8;
-  padding-right: 15px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  padding-right: 12px;
   white-space: nowrap;
-  overflow: hidden; 
-  text-overflow: ellipsis; 
-}
-
-/* Forces the last column (Actions) to never hide its buttons */
-.cr-table-header > div:last-child,
-.cr-table-row > div:last-child {
-  overflow: visible;
-  padding-right: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cr-col-id {
-  color: #8b5cf6;
+  color: var(--accent-light);
   font-weight: 600;
 }
 
 .cr-col-name {
-  color: #e2e8f0;
-  font-weight: 500;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
-/* --- Action Buttons --- */
 .cr-actions {
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
 .cr-btn {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: transparent;
   padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
   font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition);
 }
 
 .cr-btn-delete-course {
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: var(--red);
 }
+
 .cr-btn-delete-course:hover {
-  background: rgba(239, 68, 68, 0.1);
+  background: rgba(239, 68, 68, 0.15);
 }
 
 .cr-btn-delete-instructor {
-  border: 1px solid rgba(239, 68, 68, 0.4);
-  color: #ef4444;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  color: var(--orange);
 }
-.cr-btn-delete-instructor:not(:disabled):hover {
-  background: rgba(239, 68, 68, 0.1);
+
+.cr-btn-delete-instructor:hover:not(:disabled) {
+  background: rgba(245, 158, 11, 0.15);
 }
 
 .cr-btn-delete-instructor:disabled {
-  opacity: 0.3;
+  opacity: 0.4;
   cursor: not-allowed;
-  border-color: rgba(255, 255, 255, 0.1);
-  color: #64748b;
 }
 
 .cr-empty {
   text-align: center;
-  padding: 40px 0;
-  color: #64748b;
+  padding: 40px;
+  color: var(--text-muted);
 }
-
-/* Scrollbar styling for table */
-.cr-table-wrapper::-webkit-scrollbar { height: 8px; }
-.cr-table-wrapper::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 10px; }
-.cr-table-wrapper::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.3); border-radius: 10px; }

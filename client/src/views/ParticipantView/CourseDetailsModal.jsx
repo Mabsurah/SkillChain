@@ -1,9 +1,15 @@
 import React from 'react';
-import { X, Mail, Phone, MapPin, Shield } from 'lucide-react';
+import { X, Mail, Phone, MapPin, Shield, Coins } from 'lucide-react';
 import './CourseDetailsModal.css';
 
-const CourseDetailsModal = ({ isOpen, onClose }) => {
+const CourseDetailsModal = ({ isOpen, onClose, course }) => {
   if (!isOpen) return null;
+
+  const title = course ? (course.title || course.course_title || 'Course Details') : 'Course Details';
+  const instructorName = course ? (course.instructorName || 'Anik Sarker') : 'Anik Sarker';
+  const instructorEmail = course ? (course.instructorEmail || 'anik.sarker@example.com') : 'anik.sarker@example.com';
+  const skillName = course ? (course.skillName || 'Programming Foundations') : 'Programming Foundations';
+  const price = course ? (course.charge || course.price || 1200) : 1200;
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -12,19 +18,21 @@ const CourseDetailsModal = ({ isOpen, onClose }) => {
           
           {/* Header */}
           <div className="modal-header">
-            <h2>C Programming Course</h2>
+            <h2>{title}</h2>
             <button className="close-btn" onClick={onClose}>
               <X size={22} />
             </button>
           </div>
 
-          {/* First Card - Instructor */}
+          {/* Instructor Card */}
           <div className="instructor-card">
             <div className="instructor-left">
-              <div className="instructor-avatar">AS</div>
+              <div className="instructor-avatar">
+                {instructorName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()}
+              </div>
               <div className="instructor-info">
-                <span className="instructor-label">Instructor</span>
-                <h3 className="instructor-name">Anik Sarker</h3>
+                <span className="instructor-label">Course Instructor</span>
+                <h3 className="instructor-name">{instructorName}</h3>
               </div>
             </div>
 
@@ -33,7 +41,7 @@ const CourseDetailsModal = ({ isOpen, onClose }) => {
             <div className="instructor-right">
               <div className="contact-item">
                 <Mail size={18} className="contact-icon" />
-                <span>anik.sarker@example.com</span>
+                <span>{instructorEmail}</span>
               </div>
               <div className="contact-item">
                 <Phone size={18} className="contact-icon" />
@@ -46,23 +54,23 @@ const CourseDetailsModal = ({ isOpen, onClose }) => {
             </div>
           </div>
 
-          {/* Second Card - Certificate List (Dates Removed) */}
-          <h3 className="section-title">Certificate List</h3>
+          {/* Certificate & Skill Overview */}
+          <h3 className="section-title">Verified Skill &amp; Credentials</h3>
           <div className="certificate-card">
             <div className="certificate-item">
               <div className="cert-icon-wrapper">
                 <Shield size={20} />
               </div>
-              <span className="cert-name">C Programming Fundamentals</span>
+              <span className="cert-name">Associated Skill: {skillName}</span>
             </div>
             
             <div className="horizontal-divider"></div>
             
             <div className="certificate-item">
-              <div className="cert-icon-wrapper">
-                <Shield size={20} />
+              <div className="cert-icon-wrapper" style={{ background: 'rgba(245, 158, 11, 0.15)', color: '#fbbf24' }}>
+                <Coins size={20} />
               </div>
-              <span className="cert-name">Advanced C Programming</span>
+              <span className="cert-name">Enrollment Cost: <strong style={{ color: '#fbbf24' }}>{price} Credits</strong></span>
             </div>
           </div>
 

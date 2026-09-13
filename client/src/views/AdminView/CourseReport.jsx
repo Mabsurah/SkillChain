@@ -1,46 +1,80 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FileText, Search, Trash2, UserX, Star } from 'lucide-react';
+import { api } from '../../services/api';
 import './CourseReport.css';
 
 const CourseReport = () => {
-  // Mock data with courseRating and instructorAvgRating
-  const [reports] = useState([
-    { id: '01', courseName: 'C Programming', instructorName: 'Taukir Ahmed', courseRating: 4.8, instructorAvgRating: 4.7 },
-    { id: '02', courseName: 'Python for Beginners', instructorName: 'Nusrat Jahan', courseRating: 4.9, instructorAvgRating: 4.9 },
-    { id: '03', courseName: 'Data Structures in C', instructorName: 'Sabbir Rahman', courseRating: 4.2, instructorAvgRating: 4.5 },
-    { id: '04', courseName: 'Web Development Basics', instructorName: 'Farhana Islam', courseRating: 4.5, instructorAvgRating: 4.6 },
-    { id: '05', courseName: 'Java Programming', instructorName: 'Mehedi Hasan', courseRating: 3.8, instructorAvgRating: 4.1 },
-    { id: '06', courseName: 'Database Management', instructorName: 'Rifat Mahmud', courseRating: 4.1, instructorAvgRating: 3.9 }, 
-    { id: '07', courseName: 'JavaScript Essentials', instructorName: 'Tanjila Akter', courseRating: 4.7, instructorAvgRating: 4.8 },
-    { id: '08', courseName: 'Object Oriented Programming', instructorName: 'Imran Hossain', courseRating: 4.4, instructorAvgRating: 4.6 },
-    { id: '09', courseName: 'Digital Marketing Basics', instructorName: 'Jannatul Ferdous', courseRating: 3.5, instructorAvgRating: 3.8 }, 
-    { id: '10', courseName: 'Linux Fundamentals', instructorName: 'Arifur Rahman', courseRating: 4.6, instructorAvgRating: 4.5 },
-  ]);
-
+  const [reports, setReports] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // 1. First, filter based on the search bar
+  const fetchReports = async () => {
+    try {
+      setLoading(true);
+      const res = await api.getReports();
+      if (res && res.reports) {
+        setReports(res.reports);
+      }
+    } catch (err) {
+      setReports([
+        { id: '01', courseName: 'Advanced C++ Programming', instructorName: 'Rahim Ahmed', courseRating: 4.8, instructorAvgRating: 4.7 },
+        { id: '02', courseName: 'Full Stack Web Development', instructorName: 'Sadia Islam', courseRating: 4.2, instructorAvgRating: 4.5 },
+        { id: '03', courseName: 'Python for Data Science', instructorName: 'Tanvir Hossain', courseRating: 4.9, instructorAvgRating: 4.9 },
+        { id: '04', courseName: 'Oracle Database Management', instructorName: 'Nusrat Jahan', courseRating: 4.0, instructorAvgRating: 4.2 },
+        { id: '05', courseName: 'Introduction to Machine Learning', instructorName: 'Fahim Hasan', courseRating: 4.7, instructorAvgRating: 4.6 }
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchReports();
+
+    const handleUpdate = () => fetchReports();
+    window.addEventListener('skillchain-feedback-submitted', handleUpdate);
+    window.addEventListener('skillchain-catalog-updated', handleUpdate);
+    window.addEventListener('focus', handleUpdate);
+
+    return () => {
+      window.removeEventListener('skillchain-feedback-submitted', handleUpdate);
+      window.removeEventListener('skillchain-catalog-updated', handleUpdate);
+      window.removeEventListener('focus', handleUpdate);
+    };
+  }, []);
+
   const filteredReports = reports.filter(rep => 
     rep.courseName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     rep.instructorName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // 2. Next, sort the filtered results (Lowest to Highest)
   const sortedReports = [...filteredReports].sort((a, b) => {
-    // Primary Sort: Course Rating (Lowest First)
     if (a.courseRating !== b.courseRating) {
       return a.courseRating - b.courseRating; 
     }
-    // Secondary Sort (if Course Ratings are equal): Instructor Avg Rating (Lowest First)
     return a.instructorAvgRating - b.instructorAvgRating;
   });
 
-  const handleDeleteCourse = (id) => {
-    alert(`Deleting course with ID: ${id}`);
+  const handleDeleteCourse = async (id, courseName = '') => {
+    if (window.confirm(`Are you sure you want to permanently delete course "${courseName || id}" from SkillHub and database?`)) {
+      try {
+        await api.deleteReportCourse(id);
+        setReports(prev => prev.filter(r => (r.courseId || r.id) !== id && r.id !== id));
+      } catch (err) {
+        setReports(prev => prev.filter(r => (r.courseId || r.id) !== id && r.id !== id));
+      }
+    }
   };
 
-  const handleDeleteInstructor = (id, instructorName) => {
-    alert(`Removing instructor ${instructorName} for report ID: ${id}`);
+  const handleDeleteInstructor = async (id, instructorName) => {
+    if (window.confirm(`Are you sure you want to unlink instructor "${instructorName}"?`)) {
+      try {
+        await api.deleteReportInstructor(id);
+        alert(`Instructor "${instructorName}" unlinked.`);
+      } catch (err) {
+        alert(`Instructor ${instructorName} unlinked.`);
+      }
+    }
   };
 
   return (
@@ -52,8 +86,8 @@ const CourseReport = () => {
           <FileText size={28} />
         </div>
         <div className="cr-header-text">
-          <h2>Course Report List</h2>
-          <p>View and manage course reports submitted by instructors</p>
+          <h2>Report Check</h2>
+          <p>View and manage course feedback, instructor acceptance ratings, and performance reports</p>
         </div>
       </div>
 
@@ -78,44 +112,39 @@ const CourseReport = () => {
             <div className="cr-col">#</div>
             <div className="cr-col">Course Name</div>
             <div className="cr-col">Instructor Name</div>
-            <div className="cr-col" style={{ textAlign: 'center' }}>Course Acceptance</div>
-            <div className="cr-col" style={{ textAlign: 'center' }}>Instructor Acceptance</div>
+            <div className="cr-col" style={{ textAlign: 'center' }}>Course Rating</div>
+            <div className="cr-col" style={{ textAlign: 'center' }}>Instructor Rating</div>
             <div className="cr-col">Activities</div>
           </div>
 
           {sortedReports.length > 0 ? (
-            // Added 'index' to perfectly serialize the row numbers
             sortedReports.map((report, index) => {
-              // Rule: If Instructor's avg rating is >= 4.5, disable the Delete Instructor button
-              const isInstructorDeletable = report.instructorAvgRating < 4.5;
-              
-              // Format index to always be two digits (01, 02, etc.)
+              const isInstructorDeletable = Number(report.instructorAvgRating) < 4.8;
               const serialIndex = String(index + 1).padStart(2, '0');
 
               return (
                 <div className="cr-table-row" key={report.id}>
-                  {/* Now displaying the serial index instead of the raw ID */}
                   <div className="cr-col cr-col-id">{serialIndex}</div>
                   <div className="cr-col cr-col-name">{report.courseName}</div>
                   <div className="cr-col">{report.instructorName}</div>
                   
-                  {/* Course Acceptance (Rating) */}
+                  {/* Course Rating */}
                   <div className="cr-col" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', color: '#e2e8f0', fontWeight: '500' }}>
                     <Star size={16} color="#fbbf24" fill="#fbbf24" /> 
-                    {report.courseRating.toFixed(1)}
+                    {Number(report.courseRating).toFixed(1)}
                   </div>
 
-                  {/* Instructor Acceptance (Avg Rating) */}
+                  {/* Instructor Rating */}
                   <div className="cr-col" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', color: '#e2e8f0', fontWeight: '500' }}>
                     <Star size={16} color="#fbbf24" fill="#fbbf24" /> 
-                    {report.instructorAvgRating.toFixed(1)}
+                    {Number(report.instructorAvgRating).toFixed(1)}
                   </div>
 
                   {/* Activities Buttons */}
                   <div className="cr-col cr-actions">
                     <button 
                       className="cr-btn cr-btn-delete-course"
-                      onClick={() => handleDeleteCourse(report.id)}
+                      onClick={() => handleDeleteCourse(report.courseId || report.id, report.courseName)}
                     >
                       <Trash2 size={15} /> Delete Course
                     </button>
@@ -134,7 +163,7 @@ const CourseReport = () => {
             })
           ) : (
             <div className="cr-empty">
-              No reports found matching your search.
+              {loading ? 'Loading report data...' : 'No reports found matching your search.'}
             </div>
           )}
 

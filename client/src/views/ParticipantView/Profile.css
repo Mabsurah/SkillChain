@@ -3,8 +3,9 @@
 .profile-page-container {
   color: #e2e8f0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  max-width: 1000px;
-  margin: 0 auto;
+  max-width: 100%;
+  padding: 32px 36px;
+  box-sizing: border-box;
 }
 
 /* Base Card Styling */
@@ -296,35 +297,126 @@
   background: linear-gradient(90deg, #3b82f6, #a855f7);
 }
 
+.profile-cert-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.profile-cert-sub {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+.profile-cert-badge-count {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  padding: 6px 12px;
+  border-radius: 20px;
+  color: #c084fc;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
 .profile-cert-list {
   display: flex;
   flex-direction: column;
+  gap: 12px;
 }
 
-/* UPDATED: Removed border-bottom */
 .profile-cert-item {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 15px;
   color: #e2e8f0;
-  font-size: 1.05rem;
-  padding-bottom: 18px;
-  margin-bottom: 18px;
+  padding: 14px 18px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  transition: all 0.2s ease;
 }
 
-/* UPDATED: Removes padding/margin from the very last item */
-.profile-cert-item:last-child {
-  padding-bottom: 0;
-  margin-bottom: 0;
+.profile-cert-item:hover {
+  background: rgba(15, 23, 42, 0.8);
+  border-color: rgba(168, 85, 247, 0.3);
+  transform: translateX(2px);
+}
+
+.profile-cert-info-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-cert-title-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #f8fafc;
+  display: block;
+}
+
+.profile-cert-date-text {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  display: block;
+  margin-top: 2px;
+}
+
+.profile-cert-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-cert-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.profile-cert-view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(139, 92, 246, 0.12);
+  color: #c084fc;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.profile-cert-view-btn:hover {
+  background: rgba(139, 92, 246, 0.25);
+  border-color: #c084fc;
+  color: #fff;
 }
 
 /* Custom Purple Glowing Dot */
 .profile-cert-bullet {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   background-color: #a855f7;
   border-radius: 50%;
-  box-shadow: 0 0 8px #a855f7;
+  box-shadow: 0 0 10px #a855f7;
   flex-shrink: 0;
 }
 
@@ -332,8 +424,8 @@
 .profile-cert-actions {
   display: flex;
   justify-content: flex-end; 
-  margin-top: 25px;
-  padding-top: 20px;
+  margin-top: 20px;
+  padding-top: 16px;
 }
 
 /* The Outline Button */
@@ -357,4 +449,44 @@
   border-color: #c084fc;
   color: #c084fc;
   box-shadow: 0 4px 15px rgba(139, 92, 246, 0.15);
+}
+
+.no-cert-msg {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  font-style: italic;
+  margin: 6px 0;
+}
+
+/* Certificate Full Photo Modal */
+.profile-cert-modal {
+  background: #0f172a;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  width: 90%;
+  max-width: 700px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  animation: fadeIn 0.25s ease;
+}
+
+.profile-cert-img-wrap {
+  width: 100%;
+  max-height: 450px;
+  overflow: auto;
+  border-radius: 10px;
+  background: #020617;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 16px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.profile-cert-full-img {
+  max-width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  border-radius: 6px;
 }

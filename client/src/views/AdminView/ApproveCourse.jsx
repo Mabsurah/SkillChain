@@ -1,228 +1,231 @@
-import React, { useState } from 'react';
-import { ShieldCheck, Plus, Search, CheckCircle, XCircle, X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { CheckCircle, XCircle, BookOpen, User, X, Clock, Layers } from 'lucide-react';
+import { api } from '../../services/api';
 import './ApproveCourse.css';
 
 const ApproveCourse = () => {
-  // Modal State
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pendingCourses, setPendingCourses] = useState([]);
+  const [skills, setSkills] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [modalCourse, setModalCourse] = useState(null);
+  const [selectedSkill, setSelectedSkill] = useState('');
+  const [creditValue, setCreditValue] = useState(500);
+  const [toast, setToast] = useState(null);
 
-  // Available skills for the selectable dropdown (Admin action)
-  const availableSkills = [
-    'C Language', 'Python', 'Data Structures', 'HTML, CSS', 
-    'Java', 'SQL', 'JavaScript', 'OOP Concepts', 
-    'Digital Marketing', 'Linux'
-  ];
-
-  // Mock Data
-  const [courses, setCourses] = useState([
-    { id: '01', courseName: 'C Programming', instructorName: 'Taukir Ahmed', level: 'Beginner', skills: ['C Programming', 'Problem Solving'], selectedSkill: '' },
-    { id: '02', courseName: 'Python for Beginners', instructorName: 'Nusrat Jahan', level: 'Beginner', skills: ['Python Basics', 'Django'], selectedSkill: '' },
-    { id: '03', courseName: 'Data Structures in C', instructorName: 'Sabbir Rahman', level: 'Intermediate', skills: ['Data Structures', 'Algorithms'], selectedSkill: '' },
-    { id: '04', courseName: 'Web Development Basics', instructorName: 'Farhana Islam', level: 'Beginner', skills: ['HTML & CSS', 'JavaScript'], selectedSkill: '' },
-    { id: '05', courseName: 'Java Programming', instructorName: 'Mehedi Hasan', level: 'Intermediate', skills: ['Java', 'OOP Concepts'], selectedSkill: '' },
-    { id: '06', courseName: 'Database Management', instructorName: 'Rifat Mahmud', level: 'Intermediate', skills: ['SQL', 'Database Design'], selectedSkill: '' },
-    { id: '07', courseName: 'JavaScript Essentials', instructorName: 'Tanjila Akter', level: 'Beginner', skills: ['JavaScript', 'React'], selectedSkill: '' },
-    { id: '08', courseName: 'Object Oriented Programming', instructorName: 'Imran Hossain', level: 'Intermediate', skills: ['C++', 'System Design'], selectedSkill: '' },
-    { id: '09', courseName: 'Digital Marketing Basics', instructorName: 'Jannatul Ferdous', level: 'Beginner', skills: ['SEO', 'Content Marketing'], selectedSkill: '' },
-    { id: '10', courseName: 'Linux Fundamentals', instructorName: 'Arifur Rahman', level: 'Beginner', skills: ['Linux OS', 'Bash Scripting'], selectedSkill: '' },
-  ]);
-
-  const [searchQuery, setSearchQuery] = useState('');
-
-  // Handle Admin Skill Selection
-  const handleSkillChange = (courseId, newSkill) => {
-    setCourses(courses.map(course => 
-      course.id === courseId ? { ...course, selectedSkill: newSkill } : course
-    ));
+  const showToast = (msg, type = 'success') => {
+    setToast({ msg, type });
+    setTimeout(() => setToast(null), 3000);
   };
 
-  // Handle Approve
-  const handleApprove = (courseId) => {
-    const course = courses.find(c => c.id === courseId);
-    alert(`Approved ${course.courseName} with skill: ${course.selectedSkill}`);
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const [pendingRes, skillsRes] = await Promise.all([
+        api.getCourses({ status: 'Pending' }),
+        api.getSkills()
+      ]);
+      setPendingCourses(pendingRes?.courses || []);
+      setSkills(skillsRes?.skills || []);
+    } catch {
+      setPendingCourses([]);
+      setSkills([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // Handle Reject
-  const handleReject = (courseId) => {
-    alert(`Rejected course ID: ${courseId}`);
+  useEffect(() => {
+    loadData();
+
+    const handleCatalogUpdate = () => {
+      loadData();
+    };
+
+    window.addEventListener('skillchain-catalog-updated', handleCatalogUpdate);
+    window.addEventListener('skillchain-course-approved', handleCatalogUpdate);
+    window.addEventListener('focus', handleCatalogUpdate);
+
+    return () => {
+      window.removeEventListener('skillchain-catalog-updated', handleCatalogUpdate);
+      window.removeEventListener('skillchain-course-approved', handleCatalogUpdate);
+      window.removeEventListener('focus', handleCatalogUpdate);
+    };
+  }, []);
+
+  const openApproveModal = (course) => {
+    setModalCourse(course);
+    setSelectedSkill(course.skillName || course.skill_name || '');
+    setCreditValue(Number(course.charge || course.price) || 500);
   };
 
-  // Filter Logic
-  const filteredCourses = courses.filter(course => 
-    course.courseName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    course.instructorName.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const handleApprove = async () => {
+    if (!selectedSkill) { showToast('Please select a skill category', 'error'); return; }
+    if (!creditValue || Number(creditValue) <= 0) { showToast('Please enter a valid credit value', 'error'); return; }
+    
+    try {
+      const cid = modalCourse.id || modalCourse.course_id;
+      const title = modalCourse.title || modalCourse.course_title;
+      const res = await api.approveCourse({ courseId: cid, title, selectedSkill, creditValue: Number(creditValue) });
+      if (res && res.success) {
+        setPendingCourses(prev => prev.filter(c => (c.id || c.course_id) !== cid && (c.title || c.course_title) !== title));
+        showToast(res.message || `Course "${title}" approved with ${creditValue} credits!`);
+      } else {
+        showToast(res?.message || 'Failed to approve course', 'error');
+      }
+    } catch (err) {
+      showToast(`Approval error: ${err.message}`, 'error');
+    }
+    setModalCourse(null);
+  };
+
+  const handleReject = async (course) => {
+    const cid = course.id || course.course_id;
+    const title = course.title || course.course_title;
+    try {
+      await api.rejectCourse({ courseId: cid, title, courseTitle: title });
+    } catch {}
+    setPendingCourses(prev => prev.filter(c => (c.id || c.course_id) !== cid && (c.title || c.course_title) !== title));
+    showToast(`Course "${title}" rejected.`, 'error');
+  };
 
   return (
-    <div className="ac-container">
-      
-      {/* Header Section */}
-      <div className="ac-header-wrapper">
-        <div className="ac-header-left">
-          <div className="ac-header-icon">
-            <ShieldCheck size={28} />
-          </div>
-          <div className="ac-header-text">
-            <h2>Approve Course</h2>
-            <p>Review and approve courses submitted by instructors</p>
-          </div>
-        </div>
-        {/* Trigger Modal Open */}
-        <button className="ac-add-btn" onClick={() => setIsModalOpen(true)}>
-          <Plus size={18} /> Add Skill
-        </button>
-      </div>
-
-      {/* Search Bar Section */}
-      <div className="ac-search-wrapper">
-        <div className="ac-search-bar">
-          <Search size={18} color="#64748b" />
-          <input 
-            type="text" 
-            placeholder="Search by course name or instructor name..." 
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-      </div>
-
-      {/* Table Section */}
-      <div className="ac-table-wrapper">
-        <div className="ac-table-inner">
-          
-          <div className="ac-table-row ac-table-header">
-            <div className="ac-col">#</div>
-            <div className="ac-col">Course Name</div>
-            <div className="ac-col">Instructor Name</div>
-            <div className="ac-col">Course Level</div>
-            <div className="ac-col">Certificate List</div>
-            <div className="ac-col">Select Skill Name</div>
-            <div className="ac-col">Actions</div>
-          </div>
-
-          {filteredCourses.length > 0 ? (
-            filteredCourses.map((course) => {
-              const isApproveDisabled = course.selectedSkill === '';
-
-              return (
-                <div className="ac-table-row" key={course.id}>
-                  <div className="ac-col ac-col-id">{course.id}</div>
-                  <div className="ac-col ac-col-name">{course.courseName}</div>
-                  <div className="ac-col">{course.instructorName}</div>
-                  
-                  <div className="ac-col">
-                    <span className="ac-level-badge">{course.level}</span>
-                  </div>
-                  
-                  <div className="ac-col">
-                    <select className="ac-select" value="default" onChange={() => {}}>
-                      <option value="default">View Skills</option>
-                      {course.skills.map((skill, index) => (
-                        <option key={index} value={skill} disabled>
-                          {skill}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="ac-col">
-                    <select 
-                      className="ac-select"
-                      value={course.selectedSkill}
-                      onChange={(e) => handleSkillChange(course.id, e.target.value)}
-                    >
-                      <option value="" disabled>Select a skill...</option>
-                      {availableSkills.map((skill, index) => (
-                        <option key={index} value={skill}>
-                          {skill}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="ac-col ac-actions">
-                    <button 
-                      className="ac-btn ac-btn-approve"
-                      onClick={() => handleApprove(course.id)}
-                      disabled={isApproveDisabled}
-                    >
-                      <CheckCircle size={16} /> Approve
-                    </button>
-
-                    <button 
-                      className="ac-btn ac-btn-reject"
-                      onClick={() => handleReject(course.id)}
-                    >
-                      <XCircle size={16} /> Reject
-                    </button>
-                  </div>
-
-                </div>
-              );
-            })
-          ) : (
-            <div className="ac-empty">
-              No courses found matching your search.
-            </div>
-          )}
-
-        </div>
-      </div>
-
-      {/* --- ADD SKILL MODAL OVERLAY --- */}
-      {isModalOpen && (
-        <div className="ac-modal-overlay">
-          <div className="ac-modal-content">
-            
-            <button className="ac-modal-close" onClick={() => setIsModalOpen(false)}>
-              <X size={24} />
-            </button>
-
-            <h3 className="ac-modal-title">Update Skill List</h3>
-            <p className="ac-modal-subtitle">Add or update a skill and set its difficulty level.</p>
-
-            <div className="ac-form-group">
-              <label>Skill Name <span className="ac-required">*</span></label>
-              <input 
-                type="text" 
-                className="ac-modal-input" 
-                placeholder="Enter skill name" 
-              />
-            </div>
-
-            <div className="ac-form-group">
-              <label>Difficulty Level <span className="ac-required">*</span></label>
-              <select className="ac-modal-select-field" defaultValue="">
-                <option value="" disabled className="ac-placeholder-option">--Select Level--</option>
-                <option value="easy">Easy</option>
-                <option value="moderate">Moderate</option>
-                <option value="challenging">Challenging</option>
-                <option value="difficult">Difficult</option>
-              </select>
-            </div>
-
-            <div className="ac-modal-actions">
-              <button 
-                className="ac-btn-cancel" 
-                onClick={() => setIsModalOpen(false)}
-              >
-                Cancel
-              </button>
-              <button 
-                className="ac-btn-ok"
-                onClick={() => {
-                  alert('Skill updated successfully!');
-                  setIsModalOpen(false);
-                }}
-              >
-                OK
-              </button>
-            </div>
-
-          </div>
+    <div className="page-container">
+      {toast && (
+        <div className={`ac-toast ${toast.type}`}>
+          {toast.type === 'success' ? <CheckCircle size={15} /> : <XCircle size={15} />}
+          {toast.msg}
         </div>
       )}
 
+      <div className="page-header">
+        <h2>Course Approval</h2>
+        <p>Review submitted course proposals and set credit pricing</p>
+      </div>
+
+      {loading ? (
+        <div className="flex-center" style={{ padding: '60px' }}>
+          <div className="loading-spinner"></div>
+        </div>
+      ) : pendingCourses.length === 0 ? (
+        <div className="empty-state">
+          <CheckCircle size={48} color="#10b981" />
+          <h3>All Caught Up!</h3>
+          <p>No new course proposals pending review at this time.</p>
+        </div>
+      ) : (
+        <div className="ac-grid">
+          {pendingCourses.map(course => {
+            const cid = course.id || course.course_id;
+            const title = course.title || course.course_title;
+            const instructor = course.instructorName || course.instructor || api.resolveParticipantName(course.participant_id || course.instructorEmail, 'Instructor');
+
+            return (
+              <div className="ac-course-card" key={cid}>
+                <div className="ac-card-header">
+                  <div className="ac-course-icon" style={{ background: 'rgba(245, 158, 11, 0.15)', color: '#fbbf24' }}>
+                    <Clock size={20} />
+                  </div>
+                  <span className="cont-status-badge" style={{ background: 'rgba(245, 158, 11, 0.2)', border: '1px solid #f59e0b', color: '#fbbf24', fontSize: '0.75rem', padding: '2px 8px', borderRadius: '4px', fontWeight: 600 }}>
+                    Pending Review
+                  </span>
+                </div>
+
+                <h3 className="ac-course-title">{title}</h3>
+
+                <div className="ac-course-meta">
+                  <div className="meta-row">
+                    <User size={14} />
+                    <span style={{ fontSize: '0.88rem' }}>Instructor: <strong>{instructor}</strong></span>
+                  </div>
+                  <div className="meta-row">
+                    <Layers size={14} />
+                    <span style={{ fontSize: '0.85rem' }}>Level: <strong>{course.level || course.course_level || 'Intermediate'}</strong></span>
+                  </div>
+                </div>
+
+                <div className="ac-actions" style={{ marginTop: 'auto', paddingTop: '10px' }}>
+                  <button className="btn-success" onClick={() => openApproveModal(course)}>
+                    <CheckCircle size={14} /> Approve &amp; Set Price
+                  </button>
+                  <button className="btn-danger" onClick={() => handleReject(course)}>
+                    <XCircle size={14} /> Reject
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Approve Modal with Skill and Credit Value */}
+      {modalCourse && (
+        <div className="modal-overlay" onClick={() => setModalCourse(null)}>
+          <div className="modal-box" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>Approve Course &amp; Set Credit Value</h3>
+              <button className="modal-close-btn" onClick={() => setModalCourse(null)}>
+                <X size={18} />
+              </button>
+            </div>
+            <p style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 20 }}>
+              Reviewing: <strong style={{ color: 'var(--text-primary)' }}>{modalCourse.title || modalCourse.course_title}</strong>
+              <br />
+              Instructor: <strong style={{ color: '#38bdf8' }}>{modalCourse.instructorName || modalCourse.instructor || api.resolveParticipantName(modalCourse.participant_id || modalCourse.instructorEmail, 'Instructor')}</strong>
+            </p>
+
+            {/* Skill Selection */}
+            <div className="form-group">
+              <label>Select Skill Category <span style={{ color: '#f87171' }}>*</span></label>
+              <select value={selectedSkill} onChange={e => setSelectedSkill(e.target.value)}>
+                <option value="">-- Choose a skill category --</option>
+                {skills.map(s => (
+                  <option key={s.skill_id} value={s.skill_name}>{s.skill_name} ({s.skill_tier})</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Admin Credit Value Selection */}
+            <div className="form-group" style={{ marginTop: '16px' }}>
+              <label>
+                Set Course Credit Value / Cost (e.g. 400, 500, 800, 1200) <span style={{ color: '#f87171' }}>*</span>
+              </label>
+              <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                <input
+                  type="number"
+                  min="5"
+                  step="50"
+                  value={creditValue}
+                  onChange={e => setCreditValue(e.target.value)}
+                  placeholder="Enter credit value (e.g. 500)"
+                  style={{
+                    width: '100%',
+                    padding: '10px 14px',
+                    borderRadius: '8px',
+                    border: '1px solid #475569',
+                    background: '#0f172a',
+                    color: '#f8fafc',
+                    fontSize: '1rem',
+                    fontWeight: 600
+                  }}
+                />
+                <span style={{ position: 'absolute', right: '14px', color: '#94a3b8', fontSize: '0.85rem' }}>
+                  Credits
+                </span>
+              </div>
+              <p style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '6px' }}>
+                Learners on SkillHub must spend this amount of credits to enroll in this course.
+              </p>
+            </div>
+
+            <div className="modal-actions" style={{ marginTop: '24px' }}>
+              <button className="btn-ghost" onClick={() => setModalCourse(null)}>Cancel</button>
+              <button className="btn-primary" onClick={handleApprove}>
+                <CheckCircle size={15} /> Publish with {creditValue || 500} Credits
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

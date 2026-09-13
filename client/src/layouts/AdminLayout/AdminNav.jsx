@@ -1,78 +1,78 @@
-import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { 
-  Link2, LayoutDashboard, MessageSquareText, 
-  Monitor, ShieldCheck, Share2, ChevronRight, LogOut, 
-  CheckSquare 
-} from 'lucide-react'; 
-import './AdminNav.css'; 
+import React, { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import {
+  LayoutDashboard, BookOpen, ShieldCheck, Users,
+  Star, LogOut, ChevronLeft, ChevronRight,
+  Zap, Database
+} from 'lucide-react';
+import './AdminNav.css';
+
+const navItems = [
+  { to: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/admin/approve-course', icon: BookOpen, label: 'Approve Course' },
+  { to: '/admin/verify-cert', icon: ShieldCheck, label: 'Verify Certificate' },
+  { to: '/admin/feedback', icon: Star, label: 'Course Reports' },
+  { to: '/admin/monitor', icon: Users, label: 'Monitor Users' },
+  { to: '/admin/skillhub', icon: Zap, label: 'Skill Hub' },
+];
 
 const AdminNav = () => {
-  const location = useLocation(); 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const [collapsed, setCollapsed] = useState(false);
 
   const handleLogout = () => {
-    localStorage.removeItem('userRole'); 
-    navigate('/login'); 
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('participantId');
+    navigate('/login');
   };
 
-  const menuItems = [
-    { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
-    { name: 'Approve Course', path: '/admin/approve-course', icon: CheckSquare }, 
-    { name: 'Report Check', path: '/admin/feedback', icon: MessageSquareText },
-    { name: 'Monitor', path: '/admin/monitor', icon: Monitor },
-    { name: 'Verify Certificate', path: '/admin/verify-cert', icon: ShieldCheck },
-    
-    // NEW: Added matchPaths to tell the sidebar to highlight SkillHub for both of these URLs
-    { 
-      name: 'SkillHub', 
-      path: '/admin/skillhub', 
-      icon: Share2, 
-      matchPaths: ['/admin/skillhub', '/admin/lesson-list'] 
-    },
-  ];
-
   return (
-    <div className="admin-sidebar-wrapper">
-      
-      <div className="admin-sidebar-logo">
-        <Link2 size={36} className="admin-logo-icon" strokeWidth={2.5} />
-        <h2>SkillChain</h2>
+    <aside className={`admin-sidebar ${collapsed ? 'collapsed' : ''}`}>
+      <div className="sidebar-logo">
+        <div className="logo-icon">
+          <Zap size={18} />
+        </div>
+        {!collapsed && <span className="logo-text">SkillChain</span>}
       </div>
 
-      <div className="admin-nav-menu">
-        {menuItems.map((item, index) => {
-          
-          // UPDATED: Check if matchPaths exists. If it does, check all paths in the array.
-          // Otherwise, just do the standard check for item.path.
-          const isActive = item.matchPaths 
-            ? item.matchPaths.some(p => location.pathname.includes(p))
-            : location.pathname.includes(item.path);
+      {!collapsed && (
+        <div className="sidebar-role-badge">
+          <span>Administrator Panel</span>
+        </div>
+      )}
 
-          return (
-            <Link 
-              key={index} 
-              to={item.path} 
-              className={`admin-nav-item ${isActive ? 'active' : ''}`}
-            >
-              <div className="admin-nav-item-left">
-                <item.icon size={22} className="admin-nav-icon" />
-                <span>{item.name}</span>
-              </div>
-              <ChevronRight size={18} className="admin-nav-chevron" />
-            </Link>
-          );
-        })}
-      </div>
+      <nav className="sidebar-nav">
+        {navItems.map(({ to, icon: Icon, label }) => (
+          <NavLink
+            key={to}
+            to={to}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+            title={collapsed ? label : ''}
+          >
+            <Icon size={18} />
+            {!collapsed && <span>{label}</span>}
+          </NavLink>
+        ))}
+      </nav>
 
-      <div className="admin-sidebar-footer">
-        <button className="admin-logout-btn" onClick={handleLogout}>
-          <LogOut size={22} />
-          <span>Log Out</span>
+      <div className="sidebar-footer">
+        <button className="nav-item logout-btn" onClick={handleLogout}>
+          <LogOut size={18} />
+          {!collapsed && <span>Logout</span>}
+        </button>
+
+        <button
+          className="collapse-btn"
+          onClick={() => setCollapsed(c => !c)}
+          title={collapsed ? 'Expand' : 'Collapse'}
+        >
+          {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
         </button>
       </div>
-
-    </div>
+    </aside>
   );
 };
 

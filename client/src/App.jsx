@@ -1,15 +1,28 @@
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import AppRoutes from './routes/AppRoutes';
-import ScrollToTop from './ScrollToTop'; // 1. Import it here
+import React, { useEffect } from 'react'
+import { HashRouter } from 'react-router-dom'
+import AppRoutes from './routes/AppRoutes'
+import ScrollToTop from './ScrollToTop'
 
 function App() {
+  useEffect(() => {
+    try {
+      if (!localStorage.getItem('skillchain_progress_clean_v3')) {
+        Object.keys(localStorage).forEach(k => {
+          if (k.startsWith('skillchain_course_progress') || k.startsWith('skillchain_completed_lessons')) {
+            localStorage.removeItem(k);
+          }
+        });
+        localStorage.setItem('skillchain_progress_clean_v3', 'true');
+      }
+    } catch (e) {}
+  }, []);
+
   return (
-    <BrowserRouter>
-      <ScrollToTop /> {/* 2. Place it right here inside the router */}
+    <HashRouter>
+      <ScrollToTop />
       <AppRoutes />
-    </BrowserRouter>
-  );
+    </HashRouter>
+  )
 }
 
-export default App;
+export default App

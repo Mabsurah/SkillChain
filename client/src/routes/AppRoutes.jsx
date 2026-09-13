@@ -16,8 +16,8 @@ import CourseReport from "../views/AdminView/CourseReport";
 import Monitor from '../views/AdminView/Monitor';
 import AdminSkillHub from '../views/AdminView/SkillHub';
 import AdminLessonList from '../views/AdminView/LessonList';
-// 1. IMPORT ADMIN DASHBOARD HERE:
-import AdminDashboard from '../views/AdminView/Dashboard'; 
+import AdminDashboard from '../views/AdminView/Dashboard';
+import QueryStudio from '../views/QueryStudio/QueryStudio';
 
 // Participant Views
 import Dashboard from '../views/ParticipantView/Dashboard';
@@ -29,9 +29,9 @@ import PeerReview from '../views/ParticipantView/PeerReview';
 import Contribution from '../views/ParticipantView/Contribution';
 import Notifications from '../views/ParticipantView/Notifications';
 import Profile from '../views/ParticipantView/Profile';
-import ContentList from '../views/ParticipantView/ContentList'; 
+import ContentList from '../views/ParticipantView/ContentList';
 import ReviewContent from '../views/ParticipantView/ReviewContent';
-import ParticipantLessonList from '../views/ParticipantView/LessonList'; 
+import ParticipantLessonList from '../views/ParticipantView/LessonList';
 
 const AppRoutes = () => {
   return (
@@ -44,30 +44,26 @@ const AppRoutes = () => {
       {/* ADMIN ROUTES */}
       {/* ========================================= */}
       <Route path="/admin" element={<AdminLayout />}>
-        
-        {/* 2. ADD THE DEFAULT REDIRECT AND DASHBOARD ROUTE HERE */}
         <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<AdminDashboard />} />
-
         <Route path="approve-course" element={<ApproveCourse />} />
         <Route path="verify-cert" element={<VerifyCert />} />
-        <Route path="feedback" element={<CourseReport />} /> 
+        <Route path="feedback" element={<CourseReport />} />
         <Route path="monitor" element={<Monitor />} />
         <Route path="skillhub" element={<AdminSkillHub />} />
         <Route path="lesson-list" element={<AdminLessonList />} />
+        <Route path="query-studio" element={<QueryStudio />} />
       </Route>
 
       {/* ========================================= */}
       {/* PARTICIPANT ROUTES */}
       {/* ========================================= */}
       <Route path="/participant" element={<ParticipantLayout />}>
-        {/* Make sure participant also has a default redirect if you want! */}
         <Route index element={<Navigate to="dashboard" replace />} />
-        
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="skillhub" element={<ParticipantSkillHub />} />
         <Route path="my-courses" element={<MyCourses />} />
-        <Route path="lesson-list" element={<ParticipantLessonList />} /> 
+        <Route path="lesson-list" element={<ParticipantLessonList />} />
         <Route path="track" element={<Track />} />
         <Route path="exam" element={<Exam />} />
         <Route path="peer-review" element={<PeerReview />} />
@@ -75,7 +71,8 @@ const AppRoutes = () => {
         <Route path="contribution" element={<Contribution />} />
         <Route path="notifications" element={<Notifications />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="content-list" element={<ContentList />} /> 
+        <Route path="content-list" element={<ContentList />} />
+        <Route path="query-studio" element={<QueryStudio />} />
       </Route>
     </Routes>
   );
